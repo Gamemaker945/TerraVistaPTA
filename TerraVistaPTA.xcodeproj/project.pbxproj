@@ -1,0 +1,426 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		ACB3C2501BA8967500652B41 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3C24F1BA8967500652B41 /* AppDelegate.swift */; };
+		ACB3C2521BA8967500652B41 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3C2511BA8967500652B41 /* ViewController.swift */; };
+		ACB3C2551BA8967500652B41 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ACB3C2531BA8967500652B41 /* Main.storyboard */; };
+		ACB3C2571BA8967500652B41 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACB3C2561BA8967500652B41 /* Images.xcassets */; };
+		ACB3C25A1BA8967500652B41 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = ACB3C2581BA8967500652B41 /* LaunchScreen.xib */; };
+		ACB3C2661BA8967500652B41 /* TerraVistaPTATests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3C2651BA8967500652B41 /* TerraVistaPTATests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		ACB3C2601BA8967500652B41 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ACB3C2421BA8967500652B41 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ACB3C2491BA8967500652B41;
+			remoteInfo = TerraVistaPTA;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		ACB3C24A1BA8967500652B41 /* TerraVistaPTA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TerraVistaPTA.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ACB3C24E1BA8967500652B41 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ACB3C24F1BA8967500652B41 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		ACB3C2511BA8967500652B41 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		ACB3C2541BA8967500652B41 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		ACB3C2561BA8967500652B41 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		ACB3C2591BA8967500652B41 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		ACB3C25F1BA8967500652B41 /* TerraVistaPTATests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TerraVistaPTATests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		ACB3C2641BA8967500652B41 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ACB3C2651BA8967500652B41 /* TerraVistaPTATests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerraVistaPTATests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		ACB3C2471BA8967500652B41 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ACB3C25C1BA8967500652B41 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		ACB3C2411BA8967500652B41 = {
+			isa = PBXGroup;
+			children = (
+				ACB3C24C1BA8967500652B41 /* TerraVistaPTA */,
+				ACB3C2621BA8967500652B41 /* TerraVistaPTATests */,
+				ACB3C24B1BA8967500652B41 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		ACB3C24B1BA8967500652B41 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ACB3C24A1BA8967500652B41 /* TerraVistaPTA.app */,
+				ACB3C25F1BA8967500652B41 /* TerraVistaPTATests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		ACB3C24C1BA8967500652B41 /* TerraVistaPTA */ = {
+			isa = PBXGroup;
+			children = (
+				ACB3C24F1BA8967500652B41 /* AppDelegate.swift */,
+				ACB3C2511BA8967500652B41 /* ViewController.swift */,
+				ACB3C2531BA8967500652B41 /* Main.storyboard */,
+				ACB3C2561BA8967500652B41 /* Images.xcassets */,
+				ACB3C2581BA8967500652B41 /* LaunchScreen.xib */,
+				ACB3C24D1BA8967500652B41 /* Supporting Files */,
+			);
+			path = TerraVistaPTA;
+			sourceTree = "<group>";
+		};
+		ACB3C24D1BA8967500652B41 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				ACB3C24E1BA8967500652B41 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		ACB3C2621BA8967500652B41 /* TerraVistaPTATests */ = {
+			isa = PBXGroup;
+			children = (
+				ACB3C2651BA8967500652B41 /* TerraVistaPTATests.swift */,
+				ACB3C2631BA8967500652B41 /* Supporting Files */,
+			);
+			path = TerraVistaPTATests;
+			sourceTree = "<group>";
+		};
+		ACB3C2631BA8967500652B41 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				ACB3C2641BA8967500652B41 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		ACB3C2491BA8967500652B41 /* TerraVistaPTA */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ACB3C2691BA8967500652B41 /* Build configuration list for PBXNativeTarget "TerraVistaPTA" */;
+			buildPhases = (
+				ACB3C2461BA8967500652B41 /* Sources */,
+				ACB3C2471BA8967500652B41 /* Frameworks */,
+				ACB3C2481BA8967500652B41 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TerraVistaPTA;
+			productName = TerraVistaPTA;
+			productReference = ACB3C24A1BA8967500652B41 /* TerraVistaPTA.app */;
+			productType = "com.apple.product-type.application";
+		};
+		ACB3C25E1BA8967500652B41 /* TerraVistaPTATests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ACB3C26C1BA8967500652B41 /* Build configuration list for PBXNativeTarget "TerraVistaPTATests" */;
+			buildPhases = (
+				ACB3C25B1BA8967500652B41 /* Sources */,
+				ACB3C25C1BA8967500652B41 /* Frameworks */,
+				ACB3C25D1BA8967500652B41 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				ACB3C2611BA8967500652B41 /* PBXTargetDependency */,
+			);
+			name = TerraVistaPTATests;
+			productName = TerraVistaPTATests;
+			productReference = ACB3C25F1BA8967500652B41 /* TerraVistaPTATests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		ACB3C2421BA8967500652B41 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0640;
+				ORGANIZATIONNAME = "Brain Glove Apps";
+				TargetAttributes = {
+					ACB3C2491BA8967500652B41 = {
+						CreatedOnToolsVersion = 6.4;
+					};
+					ACB3C25E1BA8967500652B41 = {
+						CreatedOnToolsVersion = 6.4;
+						TestTargetID = ACB3C2491BA8967500652B41;
+					};
+				};
+			};
+			buildConfigurationList = ACB3C2451BA8967500652B41 /* Build configuration list for PBXProject "TerraVistaPTA" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = ACB3C2411BA8967500652B41;
+			productRefGroup = ACB3C24B1BA8967500652B41 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				ACB3C2491BA8967500652B41 /* TerraVistaPTA */,
+				ACB3C25E1BA8967500652B41 /* TerraVistaPTATests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		ACB3C2481BA8967500652B41 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ACB3C2551BA8967500652B41 /* Main.storyboard in Resources */,
+				ACB3C25A1BA8967500652B41 /* LaunchScreen.xib in Resources */,
+				ACB3C2571BA8967500652B41 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ACB3C25D1BA8967500652B41 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		ACB3C2461BA8967500652B41 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ACB3C2521BA8967500652B41 /* ViewController.swift in Sources */,
+				ACB3C2501BA8967500652B41 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ACB3C25B1BA8967500652B41 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ACB3C2661BA8967500652B41 /* TerraVistaPTATests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		ACB3C2611BA8967500652B41 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ACB3C2491BA8967500652B41 /* TerraVistaPTA */;
+			targetProxy = ACB3C2601BA8967500652B41 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		ACB3C2531BA8967500652B41 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ACB3C2541BA8967500652B41 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		ACB3C2581BA8967500652B41 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ACB3C2591BA8967500652B41 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		ACB3C2671BA8967500652B41 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		ACB3C2681BA8967500652B41 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		ACB3C26A1BA8967500652B41 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = TerraVistaPTA/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		ACB3C26B1BA8967500652B41 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = TerraVistaPTA/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		ACB3C26D1BA8967500652B41 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = TerraVistaPTATests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TerraVistaPTA.app/TerraVistaPTA";
+			};
+			name = Debug;
+		};
+		ACB3C26E1BA8967500652B41 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = TerraVistaPTATests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TerraVistaPTA.app/TerraVistaPTA";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		ACB3C2451BA8967500652B41 /* Build configuration list for PBXProject "TerraVistaPTA" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ACB3C2671BA8967500652B41 /* Debug */,
+				ACB3C2681BA8967500652B41 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ACB3C2691BA8967500652B41 /* Build configuration list for PBXNativeTarget "TerraVistaPTA" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ACB3C26A1BA8967500652B41 /* Debug */,
+				ACB3C26B1BA8967500652B41 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		ACB3C26C1BA8967500652B41 /* Build configuration list for PBXNativeTarget "TerraVistaPTATests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ACB3C26D1BA8967500652B41 /* Debug */,
+				ACB3C26E1BA8967500652B41 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = ACB3C2421BA8967500652B41 /* Project object */;
+}
