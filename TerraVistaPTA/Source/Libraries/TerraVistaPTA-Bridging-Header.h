@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 Brain Glove Apps. All rights reserved.
 //
 
+#import <Parse/Parse.h>
 #import "JTCalendar.h"
 #import "JTCalendarDelegate.h"
 #import "JTCalendarMenuView.h"

@@ -31,6 +31,7 @@ public class LoginController
     // VARS
     //------------------------------------------------------------------------------
     private var isLoggedIn: Bool
+    private var user:PFUser?
     
     
     //------------------------------------------------------------------------------
@@ -54,5 +55,16 @@ public class LoginController
     func setLoggedIn(loggedIn: Bool)
     {
         isLoggedIn = loggedIn
+    }
+    
+    
+    func getActiveUser() -> PFUser?
+    {
+        return user
+    }
+    
+    func setActiveUser (newUser: PFUser?)
+    {
+        user = newUser
     }
 }

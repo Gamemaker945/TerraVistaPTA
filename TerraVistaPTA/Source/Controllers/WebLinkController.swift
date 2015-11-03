@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Parse
 
 public class WebLinkController
 {
@@ -44,10 +45,6 @@ public class WebLinkController
         linkArray = [WebLink]()
         activeLink = nil
         
-        if (CommonDefines.DEBUG_APP) {
-            DEBUG_LOAD();
-        }
-        
     }
     
     func reset ()
@@ -58,70 +55,104 @@ public class WebLinkController
     //------------------------------------------------------------------------------
     // MARK: WebLinks
     //------------------------------------------------------------------------------
-    func fetchWebLinks ()
+    func fetchWebLinks (completion: (hasError: Bool, error: NSError?) -> Void)
     {
-        // TODO - Backend Fetch
+        let query:PFQuery = PFQuery(className:"PWebLink")
+        query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
+            if error == nil {
+                
+                self.linkArray.removeAll()
+                
+                // The find succeeded.
+                print("Successfully retrieved \(objects!.count) weblinks.")
+                
+                // Do something with the found objects
+                for object in objects! {
+                    let link:WebLink = WebLink()
+                    link.initWithParse(object)
+                    self.addWebLink(link)
+                }
+                completion (hasError: false, error: nil)
+            } else {
+                // Log details of the failure
+                print("Error: \(error!) \(error!.userInfo)")
+                completion (hasError: true, error: error)
+            }
+        }
     }
     
     
     func addWebLink (msg:WebLink)
     {
         // TODO - Backend Add
-        linkArray.append(msg);
+        linkArray.append(msg)
     }
     
-    func getWebLinkByID (ID: Int) -> WebLink?
+    func deleteWebLink (msg:WebLink, completion: (hasError: Bool, error: NSError?) -> Void)
+    {
+        let msgIndex = self.getMsgIndex(msg)
+        if (msgIndex != -1)
+        {
+            linkArray.removeAtIndex(msgIndex);
+        }
+        
+        msg.pObj?.deleteInBackgroundWithBlock({ (success:Bool, error: NSError?) -> Void in
+            if (error == nil) {
+                completion (hasError: false, error: nil)
+            } else {
+                // Log details of the failure
+                print("Error: \(error!) \(error!.userInfo)")
+                completion (hasError: true, error: error)
+            }
+        });
+    }
+    
+    func getWebLinkByID (ID: String) -> WebLink?
     {
         for var i=0; i < linkArray.count; i++
         {
             let msg:WebLink = linkArray[i]
-            if (msg.parseID == ID) {
-                return msg;
+            if (msg.pObj?.objectId == ID) {
+                return msg
             }
         }
-        return nil;
+        return nil
     }
     
     func getWebLinkAtIndex (index: Int) -> WebLink?
     {
-        return linkArray[index];
+        return linkArray[index]
     }
     
     func countWebLinks () -> Int
     {
-        return linkArray.count;
+        return linkArray.count
     }
     
     //------------------------------------------------------------------------------
     // MARK: Active Msg
     //------------------------------------------------------------------------------
-    func setActiveLink (msg: WebLink)
+    func setActiveLink (msg: WebLink?)
     {
         activeLink = msg;
     }
     
-    //------------------------------------------------------------------------------
-    // MARK: DEBUG
-    //------------------------------------------------------------------------------
-    func DEBUG_LOAD ()
+    func getActiveLink () -> WebLink?
     {
-        let wl1:WebLink = WebLink();
-        wl1.parseID = 1;
-        wl1.title = "Google";
-        wl1.urlStr = "http://www.google.com";
-        linkArray.append(wl1);
-        
-        let wl2:WebLink = WebLink();
-        wl2.parseID = 2;
-        wl2.title = "Apple";
-        wl2.urlStr = "http://www.apple.com";
-        linkArray.append(wl2);
-        
-        let wl3:WebLink = WebLink();
-        wl3.parseID = 3;
-        wl3.title = "Teacher Web";
-        wl3.urlStr = "http://www.teacherweb.com"
-        linkArray.append(wl3);
+        return activeLink;
     }
-
+    
+    func getMsgIndex (msg: WebLink) -> Int
+    {
+        for var i=0; i < linkArray.count; i++
+        {
+            let mymsg:WebLink = linkArray[i]
+            if (mymsg.pObj?.objectId == msg.pObj?.objectId) {
+                return i
+            }
+        }
+        return -1
+    }
+    
+   
 }

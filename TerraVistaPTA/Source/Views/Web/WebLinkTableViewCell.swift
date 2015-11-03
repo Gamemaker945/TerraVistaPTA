@@ -8,21 +8,26 @@
 
 import UIKit
 
-class WebLinkTableViewCell: UITableViewCell {
+class WebLinkTableViewCell: UITableViewCell
+{
 
     @IBOutlet weak var linkLabel: UILabel!
     @IBOutlet weak var bgView: UIView!
     
+    var myLink: WebLink! = nil
     
     override func awakeFromNib ()
     {
         super.awakeFromNib()
         bgView.layer.cornerRadius = 5
+
     }
     
-    public func setLink (link: String)
+    func setLink (link: WebLink)
     {
-        linkLabel.text = link
+        self.myLink = link
+        linkLabel.text = link.title
+        
     }
     
 }

@@ -28,28 +28,56 @@ class WebLinkAddViewController: UIViewController {
         super.viewDidLoad()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let link:WebLink? = WebLinkController.sharedInstance.getActiveLink()
+        if (link != nil)
+        {
+            linkTitleTextField.text = link?.title
+            linkURLTextField.text = link?.urlStr
+        }
+    }
+    
     
     //------------------------------------------------------------------------------
     // Mark: IBActions
     //------------------------------------------------------------------------------
     @IBAction func cancelPressed (sender: UIButton) {
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     @IBAction func okPressed (sender: UIButton) {
         if (verify())
         {
-            let link:WebLink = WebLink()
-            link.title = linkTitleTextField.text!
+            let title = linkTitleTextField.text!
             
             var url:String = linkURLTextField.text!
             if (url.rangeOfString("http://") == nil) {
                 url = "http://" + url
             }
-            link.urlStr = url
+            let urlStr:String = url
             
-            WebLinkController.sharedInstance.addWebLink(link)
-            self.navigationController?.popToRootViewControllerAnimated(true)
+            let link = PFObject(className:"PWebLink")
+            link["title"] = title
+            link["url"] = urlStr
+            link.ACL = PFACL(user: PFUser.currentUser()!)
+            link.ACL?.setPublicReadAccess(true)
+            link.saveInBackgroundWithBlock {
+                (success: Bool, error: NSError?) -> Void in
+                if (success) {
+                    let newLink = WebLink()
+                    newLink.initWithParse(link)
+                    WebLinkController.sharedInstance.addWebLink(newLink)
+                    self.navigationController?.popViewControllerAnimated(true)
+                    
+                } else {
+                    // There was a problem, check error.description
+                    // TODO Present Error
+                }
+            }
+            
+            
         }
     }
 

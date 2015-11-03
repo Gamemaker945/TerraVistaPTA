@@ -43,10 +43,6 @@ public class CalendarController
         entryArray = [CalendarEntry]()
         activeEntry = nil
         
-        if (CommonDefines.DEBUG_APP) {
-            DEBUG_LOAD();
-        }
-        
     }
     
     func reset ()
@@ -70,12 +66,12 @@ public class CalendarController
             entryArray.append(entry!) }
     }
     
-    func getCalendarEntryByID (ID: Int) -> CalendarEntry?
+    func getCalendarEntryByID (ID: String) -> CalendarEntry?
     {
         for var i=0; i < entryArray.count; i++
         {
             let entry:CalendarEntry = entryArray[i]
-            if (entry.parseID == ID) {
+            if (entry.pObj?.objectId == ID) {
                 return entry;
             }
         }
@@ -134,38 +130,6 @@ public class CalendarController
     //------------------------------------------------------------------------------
     // MARK: DEBUG
     //------------------------------------------------------------------------------
-    func DEBUG_LOAD ()
-    {
-        let entry1:CalendarEntry = CalendarEntry();
-        entry1.parseID = 1;
-        entry1.title = "Google";
-        entry1.startDate = NSDate();
-        entry1.stopDate = NSDate()
-        entry1.iconIndex = 0
-        entry1.location = "Google San Fransisco"
-        entry1.info = "Going to meet with the google people for my share of the money."
-        entryArray.append(entry1);
-        
-        let entry2:CalendarEntry = CalendarEntry();
-        entry2.parseID = 2;
-        entry2.title = "Apple";
-        entry2.startDate = NSDate();
-        entry2.stopDate = NSDate()
-        entry2.iconIndex = 1
-        entry2.location = "Apple San Fransisco"
-        entry2.info = "Meeting with apple to discuss the new extreme elementary app."
-        entryArray.append(entry2);
-        
-        let entry3:CalendarEntry = CalendarEntry();
-        entry3.parseID = 3;
-        entry3.title = "Awards Assembly";
-        entry3.startDate = NSDate(timeInterval: 20000, sinceDate: entry2.startDate!);
-        entry3.stopDate = NSDate()
-        entry3.iconIndex = 2
-        entry3.location = "General Purpose Room"
-        entry3.info = "Tonight is the awards assembly for best app."
-        entryArray.append(entry3);
-    }
     
     private func isSameDays(date1:NSDate, _ date2:NSDate) -> Bool
     {

@@ -13,12 +13,14 @@ class AdminLoginViewController: UIViewController {
     //------------------------------------------------------------------------------
     // VARS
     //------------------------------------------------------------------------------
-    @IBOutlet var emailTextField: UITextField!
+    @IBOutlet var usernameTextField: UITextField!
     @IBOutlet var passwordTextField: UITextField!
     
     @IBOutlet var loginButton: UIButton!
     @IBOutlet var forgotPasswordButton: UIButton!
     
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
+
     
     //------------------------------------------------------------------------------
     // Mark: Lifecycle Methods
@@ -33,8 +35,8 @@ class AdminLoginViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.emailTextField.text = "";
-        self.passwordTextField.text = "";
+        self.usernameTextField.text = "test";
+        self.passwordTextField.text = "test12345";
         
         self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
@@ -51,9 +53,25 @@ class AdminLoginViewController: UIViewController {
 
     @IBAction func loginPressed(sender: UIButton)
     {
-        // Perform Login
-        LoginController.sharedInstance.setLoggedIn(true)
-        self.navigationController?.popToRootViewControllerAnimated(true);
+        self.activityIndicator.startAnimating()
+        PFUser.logInWithUsernameInBackground(self.usernameTextField.text!, password: self.passwordTextField.text!) { (user: PFUser?, error: NSError?) -> Void in
+            if error == nil {
+                
+                LoginController.sharedInstance.setActiveUser(user)
+                LoginController.sharedInstance.setLoggedIn(true)
+                self.navigationController?.popToRootViewControllerAnimated(true);
+                
+                print("User Logged In")
+
+            } else {
+                // Log details of the failure
+                print("Error: \(error!) \(error!.userInfo)")
+                LoginController.sharedInstance.setActiveUser(nil)
+                LoginController.sharedInstance.setLoggedIn(false)
+            }
+            self.activityIndicator.stopAnimating()
+        }
+        
     }
 
     @IBAction func forgotPasswordPressed(sender: UIButton)

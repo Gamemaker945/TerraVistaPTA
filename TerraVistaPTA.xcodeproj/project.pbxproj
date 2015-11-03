@@ -14,6 +14,22 @@
 		ACA36A351BB3747200B32601 /* PrintController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA36A341BB3747200B32601 /* PrintController.swift */; };
 		ACABF13E1BDFFF9600F651B9 /* AdminLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACABF13D1BDFFF9600F651B9 /* AdminLoginViewController.swift */; };
 		ACABF1401BE0010B00F651B9 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACABF13F1BE0010B00F651B9 /* LoginController.swift */; };
+		ACABF1441BE0314700F651B9 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACABF1411BE0314700F651B9 /* Bolts.framework */; };
+		ACABF1451BE0314700F651B9 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACABF1421BE0314700F651B9 /* Parse.framework */; };
+		ACABF1461BE0314700F651B9 /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACABF1431BE0314700F651B9 /* ParseUI.framework */; };
+		ACABF1471BE0319300F651B9 /* Bolts.framework in Resources */ = {isa = PBXBuildFile; fileRef = ACABF1411BE0314700F651B9 /* Bolts.framework */; };
+		ACABF1481BE0319300F651B9 /* Parse.framework in Resources */ = {isa = PBXBuildFile; fileRef = ACABF1421BE0314700F651B9 /* Parse.framework */; };
+		ACABF1491BE0319300F651B9 /* ParseUI.framework in Resources */ = {isa = PBXBuildFile; fileRef = ACABF1431BE0314700F651B9 /* ParseUI.framework */; };
+		ACABF14B1BE031AD00F651B9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACABF14A1BE031AD00F651B9 /* AudioToolbox.framework */; };
+		ACABF1551BE031E800F651B9 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACABF14C1BE031E800F651B9 /* CFNetwork.framework */; };
+		ACABF1561BE031E800F651B9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACABF14D1BE031E800F651B9 /* CoreGraphics.framework */; };
+		ACABF1571BE031E800F651B9 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACABF14E1BE031E800F651B9 /* CoreLocation.framework */; };
+		ACABF1581BE031E800F651B9 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = ACABF14F1BE031E800F651B9 /* libsqlite3.tbd */; };
+		ACABF1591BE031E800F651B9 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = ACABF1501BE031E800F651B9 /* libz.tbd */; };
+		ACABF15A1BE031E800F651B9 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACABF1511BE031E800F651B9 /* QuartzCore.framework */; };
+		ACABF15B1BE031E800F651B9 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACABF1521BE031E800F651B9 /* Security.framework */; };
+		ACABF15C1BE031E800F651B9 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACABF1531BE031E800F651B9 /* StoreKit.framework */; };
+		ACABF15D1BE031E800F651B9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACABF1541BE031E800F651B9 /* SystemConfiguration.framework */; };
 		ACB3C2501BA8967500652B41 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3C24F1BA8967500652B41 /* AppDelegate.swift */; };
 		ACB3C2521BA8967500652B41 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3C2511BA8967500652B41 /* ViewController.swift */; };
 		ACB3C2551BA8967500652B41 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ACB3C2531BA8967500652B41 /* Main.storyboard */; };
@@ -71,10 +87,23 @@
 		ACA36A341BB3747200B32601 /* PrintController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrintController.swift; sourceTree = "<group>"; };
 		ACABF13D1BDFFF9600F651B9 /* AdminLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminLoginViewController.swift; sourceTree = "<group>"; };
 		ACABF13F1BE0010B00F651B9 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		ACABF1411BE0314700F651B9 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		ACABF1421BE0314700F651B9 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		ACABF1431BE0314700F651B9 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
+		ACABF14A1BE031AD00F651B9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		ACABF14C1BE031E800F651B9 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		ACABF14D1BE031E800F651B9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		ACABF14E1BE031E800F651B9 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		ACABF14F1BE031E800F651B9 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		ACABF1501BE031E800F651B9 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		ACABF1511BE031E800F651B9 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		ACABF1521BE031E800F651B9 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		ACABF1531BE031E800F651B9 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		ACABF1541BE031E800F651B9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		ACB3C24A1BA8967500652B41 /* TerraVistaPTA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TerraVistaPTA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACB3C24E1BA8967500652B41 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ACB3C24F1BA8967500652B41 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		ACB3C2511BA8967500652B41 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		ACB3C2511BA8967500652B41 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = ../../../ViewController.swift; sourceTree = "<group>"; };
 		ACB3C2541BA8967500652B41 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		ACB3C2561BA8967500652B41 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		ACB3C2591BA8967500652B41 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -140,6 +169,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ACABF1551BE031E800F651B9 /* CFNetwork.framework in Frameworks */,
+				ACABF1561BE031E800F651B9 /* CoreGraphics.framework in Frameworks */,
+				ACABF1571BE031E800F651B9 /* CoreLocation.framework in Frameworks */,
+				ACABF1581BE031E800F651B9 /* libsqlite3.tbd in Frameworks */,
+				ACABF1591BE031E800F651B9 /* libz.tbd in Frameworks */,
+				ACABF15A1BE031E800F651B9 /* QuartzCore.framework in Frameworks */,
+				ACABF15B1BE031E800F651B9 /* Security.framework in Frameworks */,
+				ACABF15C1BE031E800F651B9 /* StoreKit.framework in Frameworks */,
+				ACABF15D1BE031E800F651B9 /* SystemConfiguration.framework in Frameworks */,
+				ACABF14B1BE031AD00F651B9 /* AudioToolbox.framework in Frameworks */,
+				ACABF1461BE0314700F651B9 /* ParseUI.framework in Frameworks */,
+				ACABF1451BE0314700F651B9 /* Parse.framework in Frameworks */,
+				ACABF1441BE0314700F651B9 /* Bolts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -180,6 +222,16 @@
 		ACB3C2411BA8967500652B41 = {
 			isa = PBXGroup;
 			children = (
+				ACABF14C1BE031E800F651B9 /* CFNetwork.framework */,
+				ACABF14D1BE031E800F651B9 /* CoreGraphics.framework */,
+				ACABF14E1BE031E800F651B9 /* CoreLocation.framework */,
+				ACABF14F1BE031E800F651B9 /* libsqlite3.tbd */,
+				ACABF1501BE031E800F651B9 /* libz.tbd */,
+				ACABF1511BE031E800F651B9 /* QuartzCore.framework */,
+				ACABF1521BE031E800F651B9 /* Security.framework */,
+				ACABF1531BE031E800F651B9 /* StoreKit.framework */,
+				ACABF1541BE031E800F651B9 /* SystemConfiguration.framework */,
+				ACABF14A1BE031AD00F651B9 /* AudioToolbox.framework */,
 				ACB3C24C1BA8967500652B41 /* TerraVistaPTA */,
 				ACB3C2621BA8967500652B41 /* TerraVistaPTATests */,
 				ACB3C24B1BA8967500652B41 /* Products */,
@@ -200,7 +252,6 @@
 			children = (
 				ACB3C26F1BA8971400652B41 /* Source */,
 				ACB3C24F1BA8967500652B41 /* AppDelegate.swift */,
-				ACB3C2511BA8967500652B41 /* ViewController.swift */,
 				ACB3C2531BA8967500652B41 /* Main.storyboard */,
 				ACB3C2561BA8967500652B41 /* Images.xcassets */,
 				ACB3C2581BA8967500652B41 /* LaunchScreen.xib */,
@@ -212,6 +263,9 @@
 		ACB3C24D1BA8967500652B41 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				ACABF1411BE0314700F651B9 /* Bolts.framework */,
+				ACABF1421BE0314700F651B9 /* Parse.framework */,
+				ACABF1431BE0314700F651B9 /* ParseUI.framework */,
 				ACB3C24E1BA8967500652B41 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -316,6 +370,7 @@
 		ACB3C27D1BA8971400652B41 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				ACB3C2511BA8967500652B41 /* ViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -510,6 +565,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ACABF1471BE0319300F651B9 /* Bolts.framework in Resources */,
+				ACABF1481BE0319300F651B9 /* Parse.framework in Resources */,
+				ACABF1491BE0319300F651B9 /* ParseUI.framework in Resources */,
 				ACB3C2551BA8967500652B41 /* Main.storyboard in Resources */,
 				ACB3C25A1BA8967500652B41 /* LaunchScreen.xib in Resources */,
 				ACB3C2571BA8967500652B41 /* Images.xcassets in Resources */,
@@ -699,6 +757,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TerraVistaPTA",
+				);
 				INFOPLIST_FILE = TerraVistaPTA/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -712,6 +774,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TerraVistaPTA",
+				);
 				INFOPLIST_FILE = TerraVistaPTA/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";

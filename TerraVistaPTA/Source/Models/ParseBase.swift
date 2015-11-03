@@ -10,9 +10,14 @@ import Foundation
 
 public class ParseBase
 {
-    public var parseID:Int = -1
-    
+    public var pObj: PFObject?
+
     init () {
-        self.parseID = -1;
+        
+    }
+    
+    func initWithParse (parseObj: PFObject)
+    {
+        pObj = parseObj
     }
 }

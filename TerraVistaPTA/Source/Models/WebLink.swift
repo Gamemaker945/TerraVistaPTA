@@ -20,4 +20,11 @@ public class WebLink : ParseBase
         self.urlStr = ""
     }
     
+    override func initWithParse (parseObj: PFObject)
+    {
+        super.initWithParse(parseObj)
+        self.title = parseObj["title"] as! String
+        self.urlStr = parseObj["url"] as! String
+    }
+    
 }

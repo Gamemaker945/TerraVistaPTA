@@ -153,7 +153,7 @@ class CalendarEditDetailsViewController: UIViewController, UITextViewDelegate, U
         {
             var isNewEntry:Bool = false
             let entry:CalendarEntry? = CalendarController.sharedInstance.getActiveEntry()
-            if (entry?.parseID == -1)
+            if (entry!.pObj == nil && entry?.pObj?.objectId == nil)
             {
                 isNewEntry = true
             }
