@@ -22,6 +22,7 @@ class AnnouncementAddViewController: UIViewController, UITextViewDelegate, UITex
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var okButton: UIButton!
     
+    @IBOutlet var contentHtConstraint: NSLayoutConstraint!
     
     var kbSize: CGSize!
     var keyboardFrame: CGRect!
@@ -56,6 +57,15 @@ class AnnouncementAddViewController: UIViewController, UITextViewDelegate, UITex
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        contentHtConstraint.constant = okButton.frame.origin.y - annContentTextView.frame.origin.y - 8;
+        
+        let msg:Announcement? = AnnouncementController.sharedInstance.getActive () as? Announcement
+        if (msg != nil)
+        {
+            annTitleTextField.text = msg?.title
+            annContentTextView.text = msg?.content
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -73,13 +83,29 @@ class AnnouncementAddViewController: UIViewController, UITextViewDelegate, UITex
     @IBAction func okPressed (sender: UIButton) {
         if (verify())
         {
-            let ann:Announcement = Announcement()
-            ann.title = annTitleTextField.text!
-            ann.content = annContentTextView.text
-            ann.date = NSDate()
+            let title = annTitleTextField.text!
+            let content = annContentTextView.text!
             
-            AnnouncementController.sharedInstance.addAnnouncement(ann)
-            self.navigationController?.popToRootViewControllerAnimated(true)
+            var msg:Announcement? = AnnouncementController.sharedInstance.getActive () as? Announcement;
+            if (msg == nil)
+            {
+                msg = Announcement()
+                msg?.pObj = PFObject(className:"PAnnouncement")
+                msg?.pObj!.ACL = PFACL(user: PFUser.currentUser()!)
+                msg?.pObj!.ACL?.setPublicReadAccess(true)
+            }
+            msg?.title = title
+            msg?.content = content
+            
+            AnnouncementController.sharedInstance.update (msg!, completion: { (hasError, error) -> Void in
+                if (!hasError) {
+                    
+                    self.navigationController?.popViewControllerAnimated(true)
+                    
+                } else {
+                    ParseErrorHandler.showError(self, errorCode: error?.code)
+                }
+            })
         }
     }
     
@@ -87,7 +113,7 @@ class AnnouncementAddViewController: UIViewController, UITextViewDelegate, UITex
     // Mark: UITextViewDelegate
     //------------------------------------------------------------------------------
     func textViewDidChange(textView: UITextView) {
-        scrollToCursor()
+        //scrollToCursor()
     }
     
     //------------------------------------------------------------------------------
@@ -103,23 +129,39 @@ class AnnouncementAddViewController: UIViewController, UITextViewDelegate, UITex
     //------------------------------------------------------------------------------
     func keyboardDidShow (notification: NSNotification)
     {
+        if let userInfo = notification.userInfo {
+            if let keyboardSize = (userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+                
+                let kbY = self.view.frame.size.height - keyboardSize.height
+                contentHtConstraint.constant = kbY - annContentTextView.frame.origin.y - 68;
+                self.view.layoutIfNeeded()
+            } else {
+                // no UIKeyboardFrameBeginUserInfoKey entry in userInfo
+            }
+        } else {
+            // no userInfo dictionary in notification
+        }
+        
         // Keyboard
-        let userInfo = notification.userInfo!
-        let keyboardSize:CGSize = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGSizeValue()
-        kbSize = keyboardSize;
-        
-        let keyboardRect:CGRect = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue();
-        keyboardFrame = self.view.convertRect(keyboardRect, fromView: nil)
-        
-        scrollToCursor();
+//        let userInfo = notification.userInfo!
+//        let keyboardSize:CGSize = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGSizeValue()
+//        kbSize = keyboardSize;
+//        
+//        let keyboardRect:CGRect = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue();
+//        keyboardFrame = self.view.convertRect(keyboardRect, fromView: nil)
+//        
+        //scrollToCursor();
     }
     
     func keyboardWillHide (notification: NSNotification)
     {
-    
+        contentHtConstraint.constant = okButton.frame.origin.y - annContentTextView.frame.origin.y - 8;
     }
 
-    
+    func doneButtonClickedDismissKeyboard ()
+    {
+        annContentTextView .resignFirstResponder()
+    }
     //------------------------------------------------------------------------------
     // Mark: Private Methods
     //------------------------------------------------------------------------------
@@ -127,44 +169,19 @@ class AnnouncementAddViewController: UIViewController, UITextViewDelegate, UITex
     {
         if (annTitleTextField.text!.isEmpty)
         {
-            showErrorAlert("Please input an announcement title.");
+            ParseErrorHandler.showError(self, errorMsg:"Please input an announcement title.");
             return false;
         }
         
         if (annContentTextView.text.isEmpty)
         {
-            showErrorAlert("Please input announcement content.");
+            ParseErrorHandler.showError(self, errorMsg:"Please input announcement content.");
             return false;
         }
         
         return true;
     }
-    
-    private func showErrorAlert (msg: String)
-    {
-        let alert = UIAlertView (title: "Error", message: msg, delegate: nil, cancelButtonTitle: "OK")
-        alert.show()
-    }
-    
-    func scrollToCursor()
-    {
-        // View
-        let viewBounds:CGRect = self.view.bounds;
-        // TextView
-        let textViewBounds:CGRect = self.view.convertRect(self.annContentTextView.frame, fromView:self.annContentTextView.superview)
-        let textViewOrigin:CGPoint = textViewBounds.origin;
-        
-        // Cursor
-        let textViewCursor:CGPoint = self.annContentTextView.caretRectForPosition(self.annContentTextView.selectedTextRange!.start).origin;
-        let cursorPoint:CGPoint = CGPointMake((textViewCursor.x + textViewOrigin.x), (textViewOrigin.y + textViewCursor.y - self.annContentTextView.contentOffset.y));
-        
-        // Scroll to point
-        if (cursorPoint.y > (keyboardFrame.origin.y - 20))
-        {
-            self.annContentTextView.setContentOffset(CGPointMake(0, (cursorPoint.y - (viewBounds.size.height - kbSize.height)) + self.annContentTextView.contentOffset.y + 25), animated: true);
-            
-        }
-    }
+
 
 
 }

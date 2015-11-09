@@ -28,7 +28,7 @@ class AnnouncementTableViewCell: UITableViewCell {
         
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "MMM d, YYYY"
-        dateLabel.text = dateFormatter.stringFromDate(msg.date!)
+        dateLabel.text = dateFormatter.stringFromDate(msg.date)
     }
     
 }

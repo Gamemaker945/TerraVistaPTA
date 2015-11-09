@@ -10,16 +10,45 @@ import Foundation
 
 public class Announcement : ParseBase
 {
-    public var title: String = ""
-    public var content: String = ""
-    public var date: NSDate? = NSDate()
+    public var title: String
+        {
+        get {
+            return pObj!["title"] as! String
+        }
+        set (newtitle) {
+            pObj!["title"] = newtitle
+        }
+    }
+    
+    public var content: String
+        {
+        get {
+            return pObj!["content"] as! String
+        }
+        set (newcontent) {
+            pObj!["content"] = newcontent
+        }
+    }
+    
+    public var date: NSDate
+        {
+        get {
+            return pObj!.updatedAt!
+        }
+        set (newDate) {
+            
+        }
+    }
+
     
     override init()
     {
         super.init()
-        self.title = ""
-        self.date = nil
-        self.content = ""
+    }
+    
+    override func initWithParse (parseObj: PFObject)
+    {
+        super.initWithParse(parseObj)
     }
     
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class CalendarController
+public class CalendarController : BaseController
 {
     
     //------------------------------------------------------------------------------
@@ -29,71 +29,47 @@ public class CalendarController
     }
     
     
-    //------------------------------------------------------------------------------
-    // VARS
-    //------------------------------------------------------------------------------
-    private var entryArray: [CalendarEntry]
-    private var activeEntry: CalendarEntry?
-    
-    //------------------------------------------------------------------------------
-    // MARK: Init
-    //------------------------------------------------------------------------------
-    init() {
-        
-        entryArray = [CalendarEntry]()
-        activeEntry = nil
-        
-    }
-    
-    func reset ()
-    {
-        activeEntry = nil;
-    }
     
     //------------------------------------------------------------------------------
     // MARK: CalendarEntrys
     //------------------------------------------------------------------------------
-    func fetchCalendarEntrys ()
+    override func fetch (completion: (hasError: Bool, error: NSError?) -> Void)
     {
-        // TODO - Backend Fetch
-    }
-    
-    
-    func addCalendarEntry (entry:CalendarEntry?)
-    {
-        // TODO - Backend Add
-        if (entry != nil) {
-            entryArray.append(entry!) }
-    }
-    
-    func getCalendarEntryByID (ID: String) -> CalendarEntry?
-    {
-        for var i=0; i < entryArray.count; i++
-        {
-            let entry:CalendarEntry = entryArray[i]
-            if (entry.pObj?.objectId == ID) {
-                return entry;
+        let query:PFQuery = PFQuery(className:"PCalEntry")
+        query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
+            if error == nil {
+                
+                self.parseArray.removeAll()
+                
+                // The find succeeded.
+                print("Successfully retrieved \(objects!.count) calendar entries.")
+                
+                // Do something with the found objects
+                for object in objects! {
+                    let link:CalendarEntry = CalendarEntry()
+                    link.initWithParse(object)
+                    self.parseArray.append(link)
+                }
+                
+//                self.entryArray.sortInPlace({ (link1, link2) -> Bool in
+//                    return link1.order < link2.order
+//                })
+                completion (hasError: false, error: nil)
+            } else {
+                // Log details of the failure
+                print("Error: \(error!) \(error!.userInfo)")
+                completion (hasError: true, error: error)
             }
         }
-        return nil;
     }
     
-    func getCalendarEntryAtIndex (index: Int) -> CalendarEntry?
-    {
-        return entryArray[index];
-    }
-    
-    func countCalendarEntrys () -> Int
-    {
-        return entryArray.count;
-    }
     
     func getEntriesForDate (date: NSDate) -> NSMutableArray
     {
         let result = NSMutableArray()
-        for var i=0; i < entryArray.count; i++
+        for var i=0; i < parseArray.count; i++
         {
-            let entry:CalendarEntry = entryArray[i]
+            let entry:CalendarEntry = parseArray[i] as! CalendarEntry
             if (isSameDays(entry.startDate!, date)) {
                 result.addObject(entry)
             }
@@ -103,28 +79,16 @@ public class CalendarController
     
     func hasEntriesForDate (date: NSDate) -> Bool
     {
-        for var i=0; i < entryArray.count; i++
+        for var i=0; i < parseArray.count; i++
         {
-            let entry:CalendarEntry = entryArray[i]
+            let entry:CalendarEntry = parseArray[i] as! CalendarEntry
             if (isSameDays(entry.startDate!, date)) {
                 return true
             }
         }
         return false
     }
-    
-    //------------------------------------------------------------------------------
-    // MARK: Active entry
-    //------------------------------------------------------------------------------
-    func setActiveEntry (entry: CalendarEntry)
-    {
-        activeEntry = entry;
-    }
-    
-    func getActiveEntry () -> CalendarEntry?
-    {
-        return activeEntry;
-    }
+
     
     
     //------------------------------------------------------------------------------

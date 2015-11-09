@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC268A8B1BF02B6D007E29AE /* ParseErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC268A8A1BF02B6D007E29AE /* ParseErrorHandler.swift */; };
 		AC9C14441BB1CE7A001D2340 /* CalendarEditDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9C14431BB1CE7A001D2340 /* CalendarEditDetailsViewController.swift */; };
 		ACA36A2D1BB3605C00B32601 /* CalendarEntryTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA36A2C1BB3605C00B32601 /* CalendarEntryTypeTableViewCell.swift */; };
 		ACA36A2F1BB3611700B32601 /* CalendarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA36A2E1BB3611700B32601 /* CalendarIcon.swift */; };
@@ -30,6 +31,8 @@
 		ACABF15B1BE031E800F651B9 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACABF1521BE031E800F651B9 /* Security.framework */; };
 		ACABF15C1BE031E800F651B9 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACABF1531BE031E800F651B9 /* StoreKit.framework */; };
 		ACABF15D1BE031E800F651B9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACABF1541BE031E800F651B9 /* SystemConfiguration.framework */; };
+		ACABF1A11BEC041700F651B9 /* NSDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACABF1A01BEC041700F651B9 /* NSDate.swift */; };
+		ACABF1A31BEC09D800F651B9 /* BaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACABF1A21BEC09D800F651B9 /* BaseController.swift */; };
 		ACB3C2501BA8967500652B41 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3C24F1BA8967500652B41 /* AppDelegate.swift */; };
 		ACB3C2521BA8967500652B41 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3C2511BA8967500652B41 /* ViewController.swift */; };
 		ACB3C2551BA8967500652B41 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ACB3C2531BA8967500652B41 /* Main.storyboard */; };
@@ -80,6 +83,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AC268A8A1BF02B6D007E29AE /* ParseErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseErrorHandler.swift; sourceTree = "<group>"; };
 		AC9C14431BB1CE7A001D2340 /* CalendarEditDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarEditDetailsViewController.swift; sourceTree = "<group>"; };
 		ACA36A2C1BB3605C00B32601 /* CalendarEntryTypeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarEntryTypeTableViewCell.swift; sourceTree = "<group>"; };
 		ACA36A2E1BB3611700B32601 /* CalendarIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarIcon.swift; sourceTree = "<group>"; };
@@ -100,6 +104,8 @@
 		ACABF1521BE031E800F651B9 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		ACABF1531BE031E800F651B9 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		ACABF1541BE031E800F651B9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		ACABF1A01BEC041700F651B9 /* NSDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDate.swift; sourceTree = "<group>"; };
+		ACABF1A21BEC09D800F651B9 /* BaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseController.swift; sourceTree = "<group>"; };
 		ACB3C24A1BA8967500652B41 /* TerraVistaPTA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TerraVistaPTA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACB3C24E1BA8967500652B41 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ACB3C24F1BA8967500652B41 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -309,6 +315,7 @@
 				ACB3C2741BA8971400652B41 /* WebLinkController.swift */,
 				ACB3C3411BAA0E2100652B41 /* CalendarController.swift */,
 				ACABF13F1BE0010B00F651B9 /* LoginController.swift */,
+				ACABF1A21BEC09D800F651B9 /* BaseController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -339,6 +346,8 @@
 			children = (
 				ACB3C2A41BA8A74500652B41 /* String.swift */,
 				ACB3C34B1BAA35C100652B41 /* ColorUtils.swift */,
+				ACABF1A01BEC041700F651B9 /* NSDate.swift */,
+				AC268A8A1BF02B6D007E29AE /* ParseErrorHandler.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -604,6 +613,7 @@
 				ACB3C34E1BAA587400652B41 /* CalendarDetailsViewController.swift in Sources */,
 				ACB3C2521BA8967500652B41 /* ViewController.swift in Sources */,
 				ACB3C2921BA8971400652B41 /* WebLink.swift in Sources */,
+				ACABF1A31BEC09D800F651B9 /* BaseController.swift in Sources */,
 				AC9C14441BB1CE7A001D2340 /* CalendarEditDetailsViewController.swift in Sources */,
 				ACA36A351BB3747200B32601 /* PrintController.swift in Sources */,
 				ACB3C28E1BA8971400652B41 /* AnnouncementController.swift in Sources */,
@@ -614,6 +624,7 @@
 				ACB3C3341BA9EAFD00652B41 /* JTCalendarDelegateManager.m in Sources */,
 				ACB3C33A1BA9EAFD00652B41 /* JTCalendarWeekView.m in Sources */,
 				ACA36A2D1BB3605C00B32601 /* CalendarEntryTypeTableViewCell.swift in Sources */,
+				ACABF1A11BEC041700F651B9 /* NSDate.swift in Sources */,
 				ACB3C3371BA9EAFD00652B41 /* JTCalendarMenuView.m in Sources */,
 				ACB3C2501BA8967500652B41 /* AppDelegate.swift in Sources */,
 				ACB3C3331BA9EAFD00652B41 /* JTDateHelper.m in Sources */,
@@ -622,6 +633,7 @@
 				ACA36A311BB361CC00B32601 /* CalendarEntryTypeViewController.swift in Sources */,
 				ACB3C30B1BA9E7F700652B41 /* CalendarView.swift in Sources */,
 				ACB3C28F1BA8971400652B41 /* WebLinkController.swift in Sources */,
+				AC268A8B1BF02B6D007E29AE /* ParseErrorHandler.swift in Sources */,
 				ACB3C33B1BA9EAFD00652B41 /* JTHorizontalCalendarView.m in Sources */,
 				ACB3C34C1BAA35C100652B41 /* ColorUtils.swift in Sources */,
 				ACB3C2A51BA8A74500652B41 /* String.swift in Sources */,

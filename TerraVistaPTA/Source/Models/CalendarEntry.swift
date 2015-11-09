@@ -11,23 +11,71 @@ import Foundation
 
 public class CalendarEntry : ParseBase
 {
-    public var title: String = ""
-    public var location: String = ""
-    public var info: String = ""
-    public var iconIndex: Int = 0
+    public var title: String
+        {
+        get {
+            return pObj!["title"] as! String
+        }
+        set (newtitle) {
+            pObj!["title"] = newtitle
+        }
+    }
+    
+    public var location: String
+        {
+        get {
+            return pObj!["location"] as! String
+        }
+        set (newloc) {
+            pObj!["location"] = newloc
+        }
+    }
+    
+    public var info: String
+        {
+        get {
+            return pObj!["info"] as! String
+        }
+        set (newinfo) {
+            pObj!["info"] = newinfo
+        }
+    }
+    
+    public var iconIndex: Int
+        {
+        get {
+            return pObj!["iconIndex"] as! Int
+        }
+        set (newvalue) {
+            pObj!["iconIndex"] = newvalue
+        }
+    }
+    
     public var startDate: NSDate?
+        {
+        get {
+            return pObj!["startDate"] as? NSDate
+        }
+        set (newDate) {
+            pObj!["startDate"] = newDate
+        }
+    }
+    
     public var stopDate: NSDate?
+        {
+        get {
+            return pObj!["stopDate"] as? NSDate
+        }
+        set (newDate) {
+            pObj!["stopDate"] = newDate
+        }
+    }
+
     
     
     override init()
     {
-        super.init()
-        self.title = ""
-        self.iconIndex = 0
-        self.info = ""
-        self.startDate = NSDate()
-        self.stopDate = NSDate()
-        
+        super.init()        
     }
     
     func getIconColor() -> UIColor

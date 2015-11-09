@@ -17,6 +17,7 @@ class CalendarView: UIViewController, UITableViewDelegate, UITableViewDataSource
     //------------------------------------------------------------------------------
     @IBOutlet weak var table: UITableView!
     @IBOutlet var addButton: UIButton!
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
     @IBOutlet weak var calendarMenuView: JTCalendarMenuView!
     @IBOutlet weak var calendarContentView: JTHorizontalCalendarView!
@@ -26,13 +27,16 @@ class CalendarView: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     var dateSelected:NSDate? = nil
     var activeEntries:NSArray? = nil
-        
+    
+    var calArray:[CalendarEntry] = []
+
 
     //------------------------------------------------------------------------------
     // Mark: Lifecycle Methods
     //------------------------------------------------------------------------------
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         
         self.calendarManager = JTCalendarManager()
@@ -43,7 +47,9 @@ class CalendarView: UIViewController, UITableViewDelegate, UITableViewDataSource
         self.calendarManager.setDate(NSDate())
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(animated: Bool)
+    {
+        
         super.viewWillAppear(animated)
         
         self.addButton.hidden = !LoginController.sharedInstance.getLoggedIn()
@@ -52,15 +58,33 @@ class CalendarView: UIViewController, UITableViewDelegate, UITableViewDataSource
         self.table.reloadData()
         self.table.hidden = true
         
-        self.calendarManager.reload()
+        CalendarController.sharedInstance.fetch { (hasError, error) -> Void in
+            if (!hasError)
+            {
+                self.calArray = CalendarController.sharedInstance.getParseObjects() as! [CalendarEntry]
+                self.table.reloadData()
+                self.table.hidden = false;
+                self.calendarManager.reload()
+                self.calendarManager.setDate(NSDate())
+                
+
+                let data: NSDictionary = ["SelectedDate":NSDate()]
+                let center:NSNotificationCenter = NSNotificationCenter.defaultCenter()
+                center.postNotificationName("kJTCalendarDaySelected", object:data)
+            }
+            else
+            {
+                print("Error: \(error!) \(error!.userInfo)")
+                ParseErrorHandler.showError(self, errorCode: error?.code)
+            }
+            self.activityIndicator.stopAnimating()
+        }
         
-        let data: NSDictionary = ["SelectedDate":NSDate()]
-        let center:NSNotificationCenter = NSNotificationCenter.defaultCenter()
-        center.postNotificationName("kJTCalendarDaySelected", object:data)
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        self.activeEntries = nil
     }
     
     //------------------------------------------------------------------------------
@@ -110,7 +134,7 @@ class CalendarView: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let msg: CalendarEntry = activeEntries!.objectAtIndex(indexPath.row) as! CalendarEntry
-        CalendarController.sharedInstance.setActiveEntry(msg)
+        CalendarController.sharedInstance.setActive(msg)
         
         self.performSegueWithIdentifier("CalendarDetailsSegue", sender: self)
     }
@@ -200,7 +224,7 @@ class CalendarView: UIViewController, UITableViewDelegate, UITableViewDataSource
         
         activeEntries = CalendarController.sharedInstance.getEntriesForDate(dateSelected!)
         
-        if (activeEntries!.count > 0)
+        if (activeEntries != nil && activeEntries!.count > 0)
         {
             self.table.hidden = false;
             self.table.reloadData()
@@ -214,10 +238,12 @@ class CalendarView: UIViewController, UITableViewDelegate, UITableViewDataSource
 
     @IBAction func addButtonPressed(sender: AnyObject) {
         
-        CalendarController.sharedInstance.setActiveEntry(CalendarEntry())
+        CalendarController.sharedInstance.setActive (nil)
         self.performSegueWithIdentifier("SegueToNewEntry", sender: self)
         
     }
+    
+
     
 
 }

@@ -14,7 +14,11 @@ class AnnouncementViewController: UIViewController, UITableViewDataSource, UITab
     // VARS
     //------------------------------------------------------------------------------
     @IBOutlet var table: UITableView!
-    @IBOutlet var addButton: UIButton!
+    @IBOutlet var editButton: UIButton!
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
+    
+    var msgArray:[Announcement] = []
+    var isViewEditing = false
     
     
     //------------------------------------------------------------------------------
@@ -29,10 +33,25 @@ class AnnouncementViewController: UIViewController, UITableViewDataSource, UITab
         super.viewWillAppear(animated)
         
         
-        self.addButton.hidden = !LoginController.sharedInstance.getLoggedIn()
+        self.editButton.hidden = !LoginController.sharedInstance.getLoggedIn()
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         
-        self.table.reloadData()
+        self.activityIndicator.startAnimating()
+        self.table.hidden = true;
+        AnnouncementController.sharedInstance.fetch { (hasError, error) -> Void in
+            if (!hasError)
+            {
+                self.msgArray = AnnouncementController.sharedInstance.getParseObjects() as! [Announcement]
+                self.table.reloadData()
+                self.table.hidden = false;
+            }
+            else
+            {
+                print("Error: \(error!) \(error!.userInfo)")
+                ParseErrorHandler.showError(self, errorCode: error?.code)
+            }
+            self.activityIndicator.stopAnimating()
+        }
     }
     
     //------------------------------------------------------------------------------
@@ -56,26 +75,90 @@ class AnnouncementViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return AnnouncementController.sharedInstance.countAnnouncements()
+        
+        // Not Admin User
+        if (LoginController.sharedInstance.getActiveUser() == nil)
+        {
+            return msgArray.count
+        }
+        else
+        {
+            return msgArray.count + 1
+        }
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let msg: Announcement = AnnouncementController.sharedInstance.getAnnouncementAtIndex(indexPath.row)!
-        return 43.0 + 47.0 + getCellContentHeight(msg.content as String)
+        if (indexPath.row == msgArray.count)
+        {
+            return 58.0
+        }
+        else
+        {
+            let msg: Announcement = msgArray[indexPath.row]
+            return 43.0 + 47.0 + getCellContentHeight(msg.content as String)
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let CellIdentifier: String = "AnnoucementCell";
-        let cell:AnnouncementTableViewCell = tableView.dequeueReusableCellWithIdentifier(CellIdentifier) as! AnnouncementTableViewCell
-        let msg: Announcement = AnnouncementController.sharedInstance.getAnnouncementAtIndex(indexPath.row)!
-        cell.setAnnouncement(msg)
+        let AddCellIdentifier: String = "AddAnnoucementCell";
         
-        cell.selectionStyle = UITableViewCellSelectionStyle.None;
-        return cell
+        if (indexPath.row == msgArray.count)
+        {
+            let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(AddCellIdentifier)!
+            cell.selectionStyle = UITableViewCellSelectionStyle.None;
+            return cell
+        }
+        else
+        {
+            let cell:AnnouncementTableViewCell = tableView.dequeueReusableCellWithIdentifier(CellIdentifier) as! AnnouncementTableViewCell
+            let msg: Announcement = msgArray[indexPath.row]
+            cell.setAnnouncement(msg)
+        
+            cell.selectionStyle = UITableViewCellSelectionStyle.None;
+            return cell
+        }
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var msg: Announcement = AnnouncementController.sharedInstance.getAnnouncementAtIndex(indexPath.row)!
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    {
+        // Not Admin User
+        if (indexPath.row == msgArray.count)
+        {
+            AnnouncementController.sharedInstance.setActive (nil)
+            self.performSegueWithIdentifier("SegueToEditAnnouncement", sender: self)
+        }
+            
+        else if (isViewEditing)
+        {
+            let msg: Announcement = msgArray[indexPath.row]
+            AnnouncementController.sharedInstance.setActive (msg)
+            self.performSegueWithIdentifier("SegueToEditAnnouncement", sender: self)
+            
+        }
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.Delete {
+            let msg: Announcement = msgArray[indexPath.row]
+            self.deleteMsg(msg)
+        }
+    }
+    
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return !(indexPath.row == msgArray.count)
+    }
+    
+    func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return false;
+    }
+    
+    func tableView(tableView: UITableView, shouldIndentWhileEditingRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true;
+    }
+    
+    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+        return UITableViewCellEditingStyle.Delete
     }
     
     private func getCellContentHeight (label: String) -> CGFloat
@@ -86,6 +169,55 @@ class AnnouncementViewController: UIViewController, UITableViewDataSource, UITab
         let height:CGFloat = label.heightWithConstrainedWidth (self.view.frame.size.width - 32, font: UIFont.systemFontOfSize(14))
         
         return height;
+    }
+    
+    //------------------------------------------------------------------------------
+    // MARK: - WebLinkTableViewCellProtocol Methods
+    //------------------------------------------------------------------------------
+    func deleteMsg (msg: Announcement)
+    {
+        let alert = UIAlertController(title: "Confirmation", message: "Are you sure you want to delete this Announcement?", preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "No",  style: UIAlertActionStyle.Cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: { action in
+            self.activityIndicator.startAnimating()
+            AnnouncementController.sharedInstance.delete (msg, completion: { (hasError, error) -> Void in
+                
+                self.activityIndicator.stopAnimating()
+                if (!hasError)
+                {
+                    self.msgArray = AnnouncementController.sharedInstance.getParseObjects() as! [Announcement]
+                    self.table.reloadData()
+                }
+                else
+                {
+                    ParseErrorHandler.showError(self, errorCode: error?.code)
+                }
+            })
+        }))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func editButtonPressed(sender: AnyObject) {
+        if (isViewEditing)
+        {
+            isViewEditing = false
+            self.table.setEditing(false, animated: true)
+            self.editButton.setTitle("Edit", forState: UIControlState.Normal)
+        }
+        else
+        {
+            isViewEditing = true
+            self.table.setEditing(true, animated: true)
+            self.editButton.setTitle("Done", forState: UIControlState.Normal)
+        }
+        
+    }
+    
+    func showError (errorMsg: String)
+    {
+        let alert = UIAlertController(title: "Error", message: errorMsg, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "OK",  style: UIAlertActionStyle.Cancel, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
 }

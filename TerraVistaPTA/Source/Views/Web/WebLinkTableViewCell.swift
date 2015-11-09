@@ -19,8 +19,7 @@ class WebLinkTableViewCell: UITableViewCell
     override func awakeFromNib ()
     {
         super.awakeFromNib()
-        bgView.layer.cornerRadius = 5
-
+        //bgView.layer.cornerRadius = 5
     }
     
     func setLink (link: WebLink)

@@ -33,6 +33,8 @@ class CalendarEditDetailsViewController: UIViewController, UITextViewDelegate, U
     private var startTime: NSDate?
     private var endTime: NSDate?
     private var whenDate: NSDate?
+    private var iconIndex:Int = 0
+    
     
     //------------------------------------------------------------------------------
     // Mark: Lifecycle Methods
@@ -64,6 +66,8 @@ class CalendarEditDetailsViewController: UIViewController, UITextViewDelegate, U
         whenTextField.delegate = self;
         startTextField.delegate = self;
         endTextField.delegate = self;
+        whereTextField.delegate = self;
+        titleTextField.delegate = self;
         
         let gesture = UITapGestureRecognizer.init(target: self, action: "iconTouched")
         
@@ -115,7 +119,25 @@ class CalendarEditDetailsViewController: UIViewController, UITextViewDelegate, U
 
     func textFieldDidEndEditing(textField: UITextField) {
         activeView = nil;
+        textField.resignFirstResponder()
     }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true;
+    }
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        if (textField == whenTextField || textField == startTextField || textField == endTextField)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    
     
     @IBAction func dp(sender: UITextField) {
         
@@ -151,18 +173,18 @@ class CalendarEditDetailsViewController: UIViewController, UITextViewDelegate, U
     {
         if (verify())
         {
-            var isNewEntry:Bool = false
-            let entry:CalendarEntry? = CalendarController.sharedInstance.getActiveEntry()
-            if (entry!.pObj == nil && entry?.pObj?.objectId == nil)
-            {
-                isNewEntry = true
-            }
+            saveEntry()
+            let cal:CalendarEntry? = CalendarController.sharedInstance.getActive () as? CalendarEntry;
             
-            saveEntry(entry)
-            
-            if (isNewEntry) {
-                CalendarController.sharedInstance.addCalendarEntry(entry)
-            }
+            CalendarController.sharedInstance.update (cal!, completion: { (hasError, error) -> Void in
+                if (!hasError) {
+                    
+                    self.navigationController?.popViewControllerAnimated(true)
+                    
+                } else {
+                    ParseErrorHandler.showError(self, errorCode: error?.code)
+                }
+            })
             
             self.navigationController?.popViewControllerAnimated(true)
         }
@@ -175,8 +197,7 @@ class CalendarEditDetailsViewController: UIViewController, UITextViewDelegate, U
     
     func iconTouched ()
     {
-        let entry:CalendarEntry? = CalendarController.sharedInstance.getActiveEntry()
-        saveEntry(entry)
+        saveEntry()
         self.performSegueWithIdentifier("SegueToEntryType", sender: self)
     }
     
@@ -213,7 +234,7 @@ class CalendarEditDetailsViewController: UIViewController, UITextViewDelegate, U
     //------------------------------------------------------------------------------
     func loadCalendarEntry()
     {
-        let entry:CalendarEntry? = CalendarController.sharedInstance.getActiveEntry()
+        let entry:CalendarEntry? = CalendarController.sharedInstance.getActive() as? CalendarEntry
         
         if (entry != nil)
         {
@@ -222,12 +243,24 @@ class CalendarEditDetailsViewController: UIViewController, UITextViewDelegate, U
             
             let timeFormatter = NSDateFormatter()
             timeFormatter.dateFormat = "h:mm a"
-            startTextField.text = timeFormatter.stringFromDate(entry!.startDate!)
-            endTextField.text = timeFormatter.stringFromDate(entry!.stopDate!)
+            
+            if (entry!.startDate != nil) {
+                startTextField.text = timeFormatter.stringFromDate(entry!.startDate!)
+                startTime = entry!.startDate;
+            }
+            
+            if (entry!.stopDate != nil) {
+                endTextField.text = timeFormatter.stringFromDate(entry!.stopDate!)
+                endTime = entry!.stopDate;
+            }
             
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "MMM dd, YYYY"
-            whenTextField.text = dateFormatter.stringFromDate(entry!.startDate!)
+            
+            if (entry!.startDate != nil) {
+                whenTextField.text = dateFormatter.stringFromDate(entry!.startDate!)
+                whenDate = entry!.startDate;
+            }
             whereTextField.text = entry!.location
             
             detailsTextView.text = entry!.info
@@ -238,51 +271,60 @@ class CalendarEditDetailsViewController: UIViewController, UITextViewDelegate, U
             startTime = entry!.startDate
             endTime = entry!.stopDate
             whenDate = entry!.startDate
+            
+            iconIndex = entry!.iconIndex
 
+        }
+        else
+        {
+            self.navigationItem.title = "Add Event"
+            iconIndex = 0
         }
         
         iconBg.layer.cornerRadius = 4
         
     }
     
-    func saveEntry (entry:CalendarEntry?)
+    func saveEntry ()
     {
-        entry?.title = titleTextField.text!
+        let title = titleTextField.text!
+        let location = whereTextField.text!
+        let details = detailsTextView.text!
         
-        let calendar = NSCalendar.currentCalendar()
-        //let startcomponents = calendar.components(.Cal, fromDate: startTime)
-        let dateComponents = calendar.components([.Year, .Month, .Day], fromDate: whenDate!)
-        var timeComponents = calendar.components([.Hour, .Minute, .Second], fromDate: startTime!)
+        var cal:CalendarEntry? = CalendarController.sharedInstance.getActive () as? CalendarEntry;
+        if (cal == nil)
+        {
+            cal = CalendarEntry()
+            cal?.pObj = PFObject(className:"PCalEntry")
+            cal?.pObj!.ACL = PFACL(user: PFUser.currentUser()!)
+            cal?.pObj!.ACL?.setPublicReadAccess(true)
+        }
+        cal?.title = title
+        cal?.location = location
+        cal?.info = details
+        cal?.iconIndex = iconIndex;
         
-        var mergedComponments = NSDateComponents()
-        mergedComponments.year = dateComponents.year
-        mergedComponments.month = dateComponents.month
-        mergedComponments.day = dateComponents.day
-        mergedComponments.hour = timeComponents.hour
-        mergedComponments.minute = timeComponents.minute
-        mergedComponments.second = timeComponents.second
-        let startDate = calendar.dateFromComponents(mergedComponments)
+        if (whenDate != nil && startTime != nil) {
+            cal?.startDate = whenDate!.combineWithTime(startTime!) }
         
-        timeComponents = calendar.components([.Hour, .Minute, .Second], fromDate: endTime!)
+        if (whenDate != nil && endTime != nil) {
+            cal?.stopDate = whenDate!.combineWithTime(endTime!) }
         
-        mergedComponments = NSDateComponents()
-        mergedComponments.year = dateComponents.year
-        mergedComponments.month = dateComponents.month
-        mergedComponments.day = dateComponents.day
-        mergedComponments.hour = timeComponents.hour
-        mergedComponments.minute = timeComponents.minute
-        mergedComponments.second = timeComponents.second
-        let endDate = calendar.dateFromComponents(mergedComponments)
-        
-        entry?.startDate = startDate
-        entry?.stopDate = endDate
-        
-        entry?.location = whereTextField.text!
-        entry?.info = detailsTextView.text!
+        CalendarController.sharedInstance.setActive(cal)
     }
     
     func doneButtonClickedDismissKeyboard()
     {
+        if (activeView == whenTextField)
+        {
+            if (whenDate == nil)
+            {
+                let dateFormatter = NSDateFormatter()
+                dateFormatter.dateFormat = "MMM dd, YYYY"
+                whenTextField.text = dateFormatter.stringFromDate(NSDate())
+                whenDate = NSDate()
+            }
+        }
         activeView?.resignFirstResponder()
     }
     
@@ -312,41 +354,36 @@ class CalendarEditDetailsViewController: UIViewController, UITextViewDelegate, U
     {
         if (titleTextField.text == nil || titleTextField.text!.isEmpty)
         {
-            showErrorAlert("Please input an title for the entry.");
+            ParseErrorHandler.showError(self, errorMsg:"Please input an title for the entry.");
             return false;
         }
         
         if (startTextField.text == nil || startTextField.text!.isEmpty)
         {
-            showErrorAlert("Please input a start time for the entry.");
+            ParseErrorHandler.showError(self, errorMsg:"Please input a start time for the entry.");
             return false;
         }
         
         if (endTextField.text == nil || endTextField.text!.isEmpty)
         {
-            showErrorAlert("Please input an end time for the entry.");
+            ParseErrorHandler.showError(self, errorMsg:"Please input an end time for the entry.");
             return false;
         }
         
         if (whenTextField.text == nil || whenTextField.text!.isEmpty)
         {
-            showErrorAlert("Please input a date for the entry.");
+            ParseErrorHandler.showError(self, errorMsg:"Please input a date for the entry.");
             return false;
         }
         
         if (startTime?.compare(endTime!) == NSComparisonResult.OrderedDescending)
         {
-            showErrorAlert("Start time must be before or equal to the end time.");
+            ParseErrorHandler.showError(self, errorMsg:"Start time must be before or equal to the end time.");
             return false;
         }
         
         return true;
     }
 
-    private func showErrorAlert (msg: String)
-    {
-        let alert = UIAlertView (title: "Error", message: msg, delegate: nil, cancelButtonTitle: "OK")
-        alert.show()
-    }
 
 }

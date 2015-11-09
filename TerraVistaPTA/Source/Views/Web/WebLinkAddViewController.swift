@@ -31,7 +31,7 @@ class WebLinkAddViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        let link:WebLink? = WebLinkController.sharedInstance.getActiveLink()
+        let link:WebLink? = WebLinkController.sharedInstance.getActive () as? WebLink
         if (link != nil)
         {
             linkTitleTextField.text = link?.title
@@ -58,26 +58,27 @@ class WebLinkAddViewController: UIViewController {
             }
             let urlStr:String = url
             
-            let link = PFObject(className:"PWebLink")
-            link["title"] = title
-            link["url"] = urlStr
-            link.ACL = PFACL(user: PFUser.currentUser()!)
-            link.ACL?.setPublicReadAccess(true)
-            link.saveInBackgroundWithBlock {
-                (success: Bool, error: NSError?) -> Void in
-                if (success) {
-                    let newLink = WebLink()
-                    newLink.initWithParse(link)
-                    WebLinkController.sharedInstance.addWebLink(newLink)
+            var link:WebLink? = WebLinkController.sharedInstance.getActive() as? WebLink;
+            if (link == nil)
+            {
+                link = WebLink()
+                link?.pObj = PFObject(className:"PWebLink")
+                link?.pObj!.ACL = PFACL(user: PFUser.currentUser()!)
+                link?.pObj!.ACL?.setPublicReadAccess(true)
+                link?.order = WebLinkController.sharedInstance.count()
+            }
+            link?.title = title
+            link?.urlStr = urlStr
+            
+            WebLinkController.sharedInstance.update(link!, completion: { (hasError, error) -> Void in
+                if (!hasError) {
+                    
                     self.navigationController?.popViewControllerAnimated(true)
                     
                 } else {
-                    // There was a problem, check error.description
-                    // TODO Present Error
+                    ParseErrorHandler.showError(self, errorCode: error?.code)
                 }
-            }
-            
-            
+            })
         }
     }
 
@@ -86,23 +87,16 @@ class WebLinkAddViewController: UIViewController {
     {
         if (linkTitleTextField.text!.isEmpty)
         {
-            showErrorAlert("Please input a web link title");
+            ParseErrorHandler.showError(self, errorMsg:"Please input a web link title");
             return false;
         }
         
         if (linkURLTextField.text!.isEmpty)
         {
-            showErrorAlert("Please input a web link URL");
+            ParseErrorHandler.showError(self, errorMsg:"Please input a web link URL");
             return false;
         }
         
         return true;
     }
-    
-    private func showErrorAlert (msg: String)
-    {
-        let alert = UIAlertView (title: "Error", message: msg, delegate: nil, cancelButtonTitle: "OK")
-        alert.show()
-    }
-
 }

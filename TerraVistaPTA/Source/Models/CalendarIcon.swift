@@ -10,38 +10,33 @@ import Foundation
 
 public struct CalendarIcon
 {
-    private static var strings = ["PreK", "K", "1st", "2nd", "3rd", "4th", "5th", "PTA", "Adm", "All"]
-    
-    private static var fullstrings = ["Pre Kinder", "Kinder", "1st Grade", "2nd Grade", "3rd Grade", "4th Grade", "5th Grade", "PTA", "Administration", "Everyone"]
-    
-    private static var colors = [ColorUtils.colorWithHexString("FF7B00"),
-        ColorUtils.colorWithHexString("1E5C7F"),
-        ColorUtils.colorWithHexString("745F8E"),
-        ColorUtils.colorWithHexString("CE665F"),
-        ColorUtils.colorWithHexString("89A24C"),
-        ColorUtils.colorWithHexString("FAA757"),
-        ColorUtils.colorWithHexString("103051"),
-        ColorUtils.colorWithHexString("941100"),
-        ColorUtils.colorWithHexString("008F00"),
-        ColorUtils.colorWithHexString("6C6C6C")]
+    private static let iconInfo = [(string:"K", fullstring:"Kinder", color:ColorUtils.colorWithHexString("FF7B00")),
+        (string:"1st", fullstring:"1st Grade",      color:ColorUtils.colorWithHexString("745F8E")),
+        (string:"2nd", fullstring:"2st Grade",      color:ColorUtils.colorWithHexString("CE665F")),
+        (string:"3rd", fullstring:"3nd Grade",      color:ColorUtils.colorWithHexString("89A24C")),
+        (string:"4th", fullstring:"4rd Grade",      color:ColorUtils.colorWithHexString("FAA757")),
+        (string:"5th", fullstring:"5th Grade",      color:ColorUtils.colorWithHexString("103051")),
+        (string:"PTA", fullstring:"PTA",            color:ColorUtils.colorWithHexString("941100")),
+        (string:"Adm", fullstring:"Administration", color:ColorUtils.colorWithHexString("008F00")),
+        (string:"All", fullstring:"Everyone",       color:ColorUtils.colorWithHexString("6C6C6C"))]
     
     static func getColorForIndex (index:Int) -> UIColor
     {
-        return colors[index]
+        return iconInfo[index].color
     }
     
     static func getStringForIndex (index:Int) -> String
     {
-        return strings[index]
+        return iconInfo[index].string
     }
     
     static func getFullStringForIndex (index:Int) -> String
     {
-        return fullstrings[index]
+        return iconInfo[index].fullstring
     }
     
     static func countTypes() -> Int
     {
-        return CalendarIcon.colors.count;
+        return CalendarIcon.iconInfo.count;
     }
 }

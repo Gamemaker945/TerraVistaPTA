@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class AnnouncementController
+public class AnnouncementController : BaseController
 {
     //------------------------------------------------------------------------------
     //------------------------------------------------------------------------------
@@ -28,71 +28,47 @@ public class AnnouncementController
     }
     
     //------------------------------------------------------------------------------
-    // VARS
-    //------------------------------------------------------------------------------
-    private var msgArray: [Announcement]
-    private var activeMsg: Announcement?
-    
-    
-    //------------------------------------------------------------------------------
-    // MARK: Init
-    //------------------------------------------------------------------------------
-    init() {
-        
-        msgArray = [Announcement]()
-        activeMsg = nil
-    }
-    
-    func reset ()
-    {
-        activeMsg = nil;
-    }
-    
-    //------------------------------------------------------------------------------
     // MARK: Announcements
     //------------------------------------------------------------------------------
-    func fetchAnnouncements ()
+    override func fetch (completion: (hasError: Bool, error: NSError?) -> Void)
     {
-    // TODO - Backend Fetch
-    }
-    
-    
-    func addAnnouncement (msg:Announcement)
-    {
-        // TODO - Backend Add
-        msgArray.append(msg);
-    }
-    
-    func getAnnouncementByID (ID: String) -> Announcement?
-    {
-        for var i=0; i < msgArray.count; i++
-        {
-            let msg:Announcement = msgArray[i]
-            if (msg.pObj?.objectId == ID) {
-                return msg;
+        let query:PFQuery = PFQuery(className:"PAnnouncement")
+        query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
+            if error == nil {
+                
+                self.parseArray.removeAll()
+                
+                // The find succeeded.
+                print("Successfully retrieved \(objects!.count) announcements.")
+                
+                // Do something with the found objects
+                for object in objects! {
+                    let msg:Announcement = Announcement()
+                    msg.initWithParse(object)
+                    self.parseArray.append(msg)
+                }
+                
+               self.sortParseObjects()
+                completion (hasError: false, error: nil)
+            } else {
+                // Log details of the failure
+                print("Error: \(error!) \(error!.userInfo)")
+                completion (hasError: true, error: error)
             }
         }
-        return nil;
     }
     
-    func getAnnouncementAtIndex (index: Int) -> Announcement?
+
+    
+    override func sortParseObjects ()
     {
-        return msgArray[index];
+        self.parseArray.sortInPlace({ (pb1, pb2) -> Bool in
+            let link1 = pb1 as! Announcement
+            let link2 = pb2 as! Announcement
+
+            return link1.date > link2.date
+        })
     }
-    
-    func countAnnouncements () -> Int
-    {
-        return msgArray.count;
-    }
-    
-    //------------------------------------------------------------------------------
-    // MARK: Active Msg
-    //------------------------------------------------------------------------------
-    func setActiveMsg (msg: Announcement)
-    {
-        activeMsg = msg;
-    }
-    
     //------------------------------------------------------------------------------
     // MARK: DEBUG
     //------------------------------------------------------------------------------

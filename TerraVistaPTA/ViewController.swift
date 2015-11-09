@@ -39,28 +39,10 @@ class ViewController: UIViewController {
         
         self.updateAdminItems()
         
-        //self.signup()
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "wolfLongPressed:")
+        self.wolfImage.addGestureRecognizer(longPressRecognizer)
         
-        if (LoginController.sharedInstance.getActiveUser() == nil)
-        {
-            self.activityIndicator.startAnimating()
-            self.enableButtons(false)
-            PFAnonymousUtils.logInWithBlock {
-                (user: PFUser?, error: NSError?) -> Void in
-                if error != nil || user == nil {
-                    print("Anonymous login failed.")
-                } else {
-                    LoginController.sharedInstance.setActiveUser(nil)
-                    print("Anonymous user logged in.")
-                    
-                    let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "wolfLongPressed:")
-                    self.wolfImage.addGestureRecognizer(longPressRecognizer)
-                    
-                    self.enableButtons(true)
-                }
-               self.activityIndicator.stopAnimating()
-            }
-        }
+        self.enableButtons(true)
         
     }
     

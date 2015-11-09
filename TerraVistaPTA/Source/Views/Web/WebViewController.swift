@@ -17,6 +17,7 @@ class WebViewController: UIViewController, UITableViewDataSource, UITableViewDel
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
     var isViewEditing = false
+    var linkArray:[WebLink] = []
     
     //------------------------------------------------------------------------------
     // MARK: - Lifecycle Methods
@@ -36,16 +37,17 @@ class WebViewController: UIViewController, UITableViewDataSource, UITableViewDel
         
         self.activityIndicator.startAnimating()
         self.table.hidden = true;
-        WebLinkController.sharedInstance.fetchWebLinks { (hasError, error) -> Void in
+        WebLinkController.sharedInstance.fetch { (hasError, error) -> Void in
             if (!hasError)
             {
+                self.linkArray = WebLinkController.sharedInstance.getParseObjects() as! [WebLink]
                 self.table.reloadData()
                 self.table.hidden = false;
             }
             else
             {
                 print("Error: \(error!) \(error!.userInfo)")
-                self.showError("There was an error fetching the web links from the server: \(error!) \(error!.userInfo)")
+                ParseErrorHandler.showError(self, errorCode: error?.code)
             }
             self.activityIndicator.stopAnimating()
         }
@@ -79,11 +81,11 @@ class WebViewController: UIViewController, UITableViewDataSource, UITableViewDel
         // Not Admin User
         if (LoginController.sharedInstance.getActiveUser() == nil)
         {
-            return WebLinkController.sharedInstance.countWebLinks()
+            return linkArray.count
         }
         else
         {
-            return WebLinkController.sharedInstance.countWebLinks() + 1
+            return linkArray.count + 1
         }
     }
     
@@ -92,7 +94,7 @@ class WebViewController: UIViewController, UITableViewDataSource, UITableViewDel
         let WebCellIdentifier: String = "WebLinkCell";
         let AddCellIdentifier: String = "AddLinkCell";
         
-        if (indexPath.row == WebLinkController.sharedInstance.countWebLinks())
+        if (indexPath.row == linkArray.count)
         {
             let cell: WebLinkTableViewCell = tableView.dequeueReusableCellWithIdentifier(AddCellIdentifier) as! WebLinkTableViewCell
             cell.selectionStyle = UITableViewCellSelectionStyle.None;
@@ -101,7 +103,7 @@ class WebViewController: UIViewController, UITableViewDataSource, UITableViewDel
         else
         {
             let cell: WebLinkTableViewCell = tableView.dequeueReusableCellWithIdentifier(WebCellIdentifier) as! WebLinkTableViewCell
-            let link: WebLink = WebLinkController.sharedInstance.getWebLinkAtIndex(indexPath.row)!
+            let link: WebLink = linkArray[indexPath.row]
             cell.setLink(link)
             
             cell.selectionStyle = UITableViewCellSelectionStyle.None;
@@ -112,22 +114,22 @@ class WebViewController: UIViewController, UITableViewDataSource, UITableViewDel
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
         // Not Admin User
-        if (indexPath.row == WebLinkController.sharedInstance.countWebLinks())
+        if (indexPath.row == linkArray.count)
         {
-            WebLinkController.sharedInstance.setActiveLink(nil)
+            WebLinkController.sharedInstance.setActive (nil)
             self.performSegueWithIdentifier("SegueToEditWebLink", sender: self)
         }
         
         else if (isViewEditing)
         {
-            let link: WebLink = WebLinkController.sharedInstance.getWebLinkAtIndex(indexPath.row)!
-            WebLinkController.sharedInstance.setActiveLink(link)
+            let link: WebLink = linkArray[indexPath.row]
+            WebLinkController.sharedInstance.setActive (link)
             self.performSegueWithIdentifier("SegueToEditWebLink", sender: self)
 
         }
         else
         {
-            let link: WebLink = WebLinkController.sharedInstance.getWebLinkAtIndex(indexPath.row)!
+            let link: WebLink = linkArray[indexPath.row]
             var urlStr = link.urlStr
             if (urlStr.rangeOfString("http://") == nil) {
                 urlStr = "http://" + urlStr
@@ -136,7 +138,7 @@ class WebViewController: UIViewController, UITableViewDataSource, UITableViewDel
             let url: NSURL = NSURL(string: urlStr)!
             
             if (!UIApplication.sharedApplication().openURL(url)) {
-                 self.showError("It appears this is not a valid link or the link is not responding. Please wait a bit and try again or contact the applicaiton administrator.")
+                 ParseErrorHandler.showError(self, errorMsg:"It appears this is not a valid link or the link is not responding. Please wait a bit and try again or contact the applicaiton administrator.")
             }
 
         }
@@ -144,13 +146,13 @@ class WebViewController: UIViewController, UITableViewDataSource, UITableViewDel
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == UITableViewCellEditingStyle.Delete {
-            let link: WebLink = WebLinkController.sharedInstance.getWebLinkAtIndex(indexPath.row)!
+            let link: WebLink = linkArray[indexPath.row]
             self.deleteLink(link)
         }
     }
     
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return !(indexPath.row == WebLinkController.sharedInstance.countWebLinks())
+        return !(indexPath.row == linkArray.count)
     }
     
     func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -166,9 +168,22 @@ class WebViewController: UIViewController, UITableViewDataSource, UITableViewDel
     }
     
     func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-//        var itemToMove = tableData[fromIndexPath.row]
-//        tableData.removeAtIndex(fromIndexPath.row)
-//        tableData.insert(itemToMove, atIndex: toIndexPath.row)
+        let itemToMove:WebLink = linkArray[fromIndexPath.row]
+        itemToMove.order = toIndexPath.row
+        linkArray.removeAtIndex(fromIndexPath.row)
+        linkArray.insert(itemToMove, atIndex: toIndexPath.row)
+        
+        var pfObjArray = [PFObject]()
+        pfObjArray.append(itemToMove.pObj!)
+        
+        for (var i=toIndexPath.row+1; i < linkArray.count; i++)
+        {
+            let link = linkArray[i]
+            link.order++
+            pfObjArray.append(link.pObj!)
+        }
+        
+        PFObject.saveAllInBackground(pfObjArray)
     }
     
     //------------------------------------------------------------------------------
@@ -180,16 +195,17 @@ class WebViewController: UIViewController, UITableViewDataSource, UITableViewDel
         alert.addAction(UIAlertAction(title: "No",  style: UIAlertActionStyle.Cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: { action in
             self.activityIndicator.startAnimating()
-            WebLinkController.sharedInstance.deleteWebLink(link, completion: { (hasError, error) -> Void in
+            WebLinkController.sharedInstance.delete(link, completion: { (hasError, error) -> Void in
                 
                 self.activityIndicator.stopAnimating()
                 if (!hasError)
                 {
+                    self.linkArray = WebLinkController.sharedInstance.getParseObjects() as! [WebLink]
                     self.table.reloadData()
                 }
                 else
                 {
-                    self.showError("There was an error deleting the web link from the server: \(error!) \(error!.userInfo)")
+                    ParseErrorHandler.showError(self, errorCode: error?.code)
                 }
             })
         }))
@@ -209,16 +225,5 @@ class WebViewController: UIViewController, UITableViewDataSource, UITableViewDel
             self.table.setEditing(true, animated: true)
             self.editButton.setTitle("Done", forState: UIControlState.Normal)
         }
-        
     }
-    
-    
-    
-    func showError (errorMsg: String)
-    {
-        let alert = UIAlertController(title: "Error", message: errorMsg, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "OK",  style: UIAlertActionStyle.Cancel, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
-    }
-    
 }

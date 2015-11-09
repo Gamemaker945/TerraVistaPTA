@@ -53,7 +53,7 @@ class CalendarEntryTypeViewController: UIViewController, UITableViewDataSource, 
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let entry:CalendarEntry? = CalendarController.sharedInstance.getActiveEntry()
+        let entry:CalendarEntry? = CalendarController.sharedInstance.getActive() as? CalendarEntry
         entry?.iconIndex = indexPath.row
         self.navigationController?.popViewControllerAnimated(true)
     }
