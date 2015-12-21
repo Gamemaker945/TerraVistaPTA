@@ -7,14 +7,14 @@
 //
 
 import UIKit
+import JTCalendar
 
-
-class CalendarView: UIViewController, UITableViewDelegate, UITableViewDataSource, JTCalendarDelegate
+class CalendarView: UIViewController
 {
 
-    //------------------------------------------------------------------------------
-    // VARS
-    //------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    // Outlets
+    //--------------------------------------------------------------------------
     @IBOutlet weak var table: UITableView!
     @IBOutlet var addButton: UIButton!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
@@ -22,8 +22,12 @@ class CalendarView: UIViewController, UITableViewDelegate, UITableViewDataSource
     @IBOutlet weak var calendarMenuView: JTCalendarMenuView!
     @IBOutlet weak var calendarContentView: JTHorizontalCalendarView!
 
-    var calendarManager: JTCalendarManager!
     @IBOutlet weak var calendarView: UIView!
+
+    //--------------------------------------------------------------------------
+    // VARS
+    //--------------------------------------------------------------------------
+    var calendarManager: JTCalendarManager!
     
     var dateSelected:NSDate? = nil
     var activeEntries:NSArray? = nil
@@ -31,9 +35,9 @@ class CalendarView: UIViewController, UITableViewDelegate, UITableViewDataSource
     var calArray:[CalendarEntry] = []
 
 
-    //------------------------------------------------------------------------------
-    // Mark: Lifecycle Methods
-    //------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    // Mark: - Lifecycle Methods
+    //--------------------------------------------------------------------------
     
     override func viewDidLoad()
     {
@@ -45,6 +49,8 @@ class CalendarView: UIViewController, UITableViewDelegate, UITableViewDataSource
         self.calendarManager.menuView = self.calendarMenuView
         self.calendarManager.contentView = self.calendarContentView
         self.calendarManager.setDate(NSDate())
+        
+        dateSelected = NSDate()
     }
     
     override func viewWillAppear(animated: Bool)
@@ -65,12 +71,7 @@ class CalendarView: UIViewController, UITableViewDelegate, UITableViewDataSource
                 self.table.reloadData()
                 self.table.hidden = false;
                 self.calendarManager.reload()
-                self.calendarManager.setDate(NSDate())
-                
-
-                let data: NSDictionary = ["SelectedDate":NSDate()]
-                let center:NSNotificationCenter = NSNotificationCenter.defaultCenter()
-                center.postNotificationName("kJTCalendarDaySelected", object:data)
+                self.displayEventsForDate(self.dateSelected!)
             }
             else
             {
@@ -87,9 +88,46 @@ class CalendarView: UIViewController, UITableViewDelegate, UITableViewDataSource
         self.activeEntries = nil
     }
     
-    //------------------------------------------------------------------------------
-    // Mark: TableView Methods
-    //------------------------------------------------------------------------------
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let backItem = UIBarButtonItem()
+        backItem.title = "Back"
+        navigationItem.backBarButtonItem = backItem
+    }
+    
+    //--------------------------------------------------------------------------
+    // Mark: - IBAction Methods
+    //--------------------------------------------------------------------------
+    @IBAction func addButtonPressed(sender: AnyObject)
+    {
+        CalendarController.sharedInstance.setActive (nil)
+        self.performSegueWithIdentifier("SegueToNewEntry", sender: self)
+    }
+    
+    //--------------------------------------------------------------------------
+    // Mark: - Private Methods
+    //--------------------------------------------------------------------------
+    func displayEventsForDate (date: NSDate)
+    {
+        activeEntries = CalendarController.sharedInstance.getEntriesForDate(date)
+        
+        if (activeEntries != nil && activeEntries!.count > 0)
+        {
+            self.table.hidden = false;
+            self.table.reloadData()
+        }
+        else
+        {
+            self.table.hidden = true;
+        }
+    }
+}
+
+// *****************************************************************************
+// MARK: - UITableViewDelegate
+// *****************************************************************************
+
+extension CalendarView : UITableViewDelegate
+{
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return nil
     }
@@ -106,7 +144,32 @@ class CalendarView: UIViewController, UITableViewDelegate, UITableViewDataSource
         return 54
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let msg: CalendarEntry = activeEntries!.objectAtIndex(indexPath.row) as! CalendarEntry
+        CalendarController.sharedInstance.setActive(msg)
+        
+        self.performSegueWithIdentifier("CalendarDetailsSegue", sender: self)
+    }
     
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        let trans = CATransform3DMakeTranslation(-cell.frame.size.width, 0.0, 0.0)
+        cell.layer.transform = trans
+        
+        UIView.beginAnimations("Move", context: nil)
+        UIView.setAnimationDuration(0.3)
+        UIView.setAnimationDelay(0.1 * Double(indexPath.row))
+        cell.layer.transform = CATransform3DIdentity
+        UIView.commitAnimations()
+    }
+
+}
+
+// *****************************************************************************
+// MARK: - UITableViewDataSource
+// *****************************************************************************
+
+extension CalendarView : UITableViewDataSource
+{
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -131,25 +194,22 @@ class CalendarView: UIViewController, UITableViewDelegate, UITableViewDataSource
         cell.selectionStyle = UITableViewCellSelectionStyle.None;
         return cell
     }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let msg: CalendarEntry = activeEntries!.objectAtIndex(indexPath.row) as! CalendarEntry
-        CalendarController.sharedInstance.setActive(msg)
-        
-        self.performSegueWithIdentifier("CalendarDetailsSegue", sender: self)
-    }
-    
-    
-    //------------------------------------------------------------------------------
-    // Mark: JTCalendarDelegate Methods
-    //------------------------------------------------------------------------------
 
+}
+
+
+// *****************************************************************************
+// MARK: - JTCalendarDelegate
+// *****************************************************************************
+
+extension CalendarView : JTCalendarDelegate
+{
     func calendar(calendar:JTCalendarManager!, prepareDayView dayView:UIView!)
     {
         let dv = dayView as! JTCalendarDayView
         
         dv.hidden = false;
-    
+        
         // Test if the dayView is from another month than the page
         // Use only in month mode for indicate the day of the previous or next month
         if(dv.isFromAnotherMonth)
@@ -180,7 +240,7 @@ class CalendarView: UIViewController, UITableViewDelegate, UITableViewDataSource
             dv.dotView.backgroundColor = UIColor.redColor();
             dv.textLabel.textColor = UIColor.blackColor();
         }
-    
+        
         // Your method to test if a date have an event for example
         if(CalendarController.sharedInstance.hasEntriesForDate(dv.date))
         {
@@ -222,28 +282,6 @@ class CalendarView: UIViewController, UITableViewDelegate, UITableViewDataSource
             }
         }
         
-        activeEntries = CalendarController.sharedInstance.getEntriesForDate(dateSelected!)
-        
-        if (activeEntries != nil && activeEntries!.count > 0)
-        {
-            self.table.hidden = false;
-            self.table.reloadData()
-        }
-        else
-        {
-            self.table.hidden = true;
-        }
+        self.displayEventsForDate(dateSelected!)
     }
-
-
-    @IBAction func addButtonPressed(sender: AnyObject) {
-        
-        CalendarController.sharedInstance.setActive (nil)
-        self.performSegueWithIdentifier("SegueToNewEntry", sender: self)
-        
-    }
-    
-
-    
-
 }

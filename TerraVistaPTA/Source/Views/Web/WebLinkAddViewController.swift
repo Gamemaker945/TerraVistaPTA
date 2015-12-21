@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 Brain Glove Apps. All rights reserved.
 //
 import UIKit
+import Parse
 
 class WebLinkAddViewController: UIViewController {
     
@@ -19,6 +20,9 @@ class WebLinkAddViewController: UIViewController {
     
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var okButton: UIButton!
+    
+    @IBOutlet var navTitle: UINavigationItem!
+    
     
     //------------------------------------------------------------------------------
     // Mark: Lifecycle Methods
@@ -36,6 +40,7 @@ class WebLinkAddViewController: UIViewController {
         {
             linkTitleTextField.text = link?.title
             linkURLTextField.text = link?.urlStr
+            navTitle.title = "Edit Web link"
         }
     }
     
@@ -43,10 +48,6 @@ class WebLinkAddViewController: UIViewController {
     //------------------------------------------------------------------------------
     // Mark: IBActions
     //------------------------------------------------------------------------------
-    @IBAction func cancelPressed (sender: UIButton) {
-        self.navigationController?.popViewControllerAnimated(true)
-    }
-    
     @IBAction func okPressed (sender: UIButton) {
         if (verify())
         {

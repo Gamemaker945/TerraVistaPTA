@@ -7,9 +7,9 @@
 //
 
 #import <Parse/Parse.h>
-#import "JTCalendar.h"
-#import "JTCalendarDelegate.h"
-#import "JTCalendarMenuView.h"
-#import "JTHorizontalCalendarView.h"
-#import "JTVerticalCalendarView.h"
-#import "JTCalendarDelegate.h"
+#import <JTCalendar/JTCalendar.h>
+#import <JTCalendar/JTCalendarDelegate.h>
+#import <JTCalendar/JTCalendarMenuView.h>
+#import <JTCalendar/JTHorizontalCalendarView.h>
+#import <JTCalendar/JTVerticalCalendarView.h>
+#import <JTCalendar/JTCalendarDelegate.h>

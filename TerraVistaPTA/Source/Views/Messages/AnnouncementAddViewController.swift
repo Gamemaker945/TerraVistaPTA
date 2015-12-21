@@ -7,13 +7,16 @@
 //
 
 import UIKit
+import Parse
 
-class AnnouncementAddViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate
+// *****************************************************************************
+// *****************************************************************************
+class AnnouncementAddViewController: UIViewController
 {
 
-    //------------------------------------------------------------------------------
-    // VARS
-    //------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    // Outlets
+    //--------------------------------------------------------------------------
     @IBOutlet weak var bgView: UIView!
     
     @IBOutlet weak var annTitleTextField: UITextField!
@@ -23,15 +26,21 @@ class AnnouncementAddViewController: UIViewController, UITextViewDelegate, UITex
     @IBOutlet weak var okButton: UIButton!
     
     @IBOutlet var contentHtConstraint: NSLayoutConstraint!
+    @IBOutlet var navTitle: UINavigationItem!
     
+    
+    //--------------------------------------------------------------------------
+    // VARS
+    //--------------------------------------------------------------------------
     var kbSize: CGSize!
     var keyboardFrame: CGRect!
     
-    //------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     // Mark: Lifecycle Methods
-    //------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidShow:", name: UIKeyboardDidShowNotification, object: nil)
@@ -52,10 +61,11 @@ class AnnouncementAddViewController: UIViewController, UITextViewDelegate, UITex
         
         annContentTextView.delegate = self;
         annTitleTextField.delegate = self;
-
+        
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(animated: Bool)
+    {
         super.viewWillAppear(animated)
         
         contentHtConstraint.constant = okButton.frame.origin.y - annContentTextView.frame.origin.y - 8;
@@ -65,22 +75,21 @@ class AnnouncementAddViewController: UIViewController, UITextViewDelegate, UITex
         {
             annTitleTextField.text = msg?.title
             annContentTextView.text = msg?.content
+            navTitle.title = "Edit Announcement"
         }
     }
     
-    override func didReceiveMemoryWarning() {
+    override func didReceiveMemoryWarning()
+    {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    //------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     // Mark: IBActions
-    //------------------------------------------------------------------------------
-    @IBAction func cancelPressed (sender: UIButton) {
-        self.navigationController?.popToRootViewControllerAnimated(true)
-    }
-    
-    @IBAction func okPressed (sender: UIButton) {
+    //--------------------------------------------------------------------------
+    @IBAction func okPressed (sender: UIButton)
+    {
         if (verify())
         {
             let title = annTitleTextField.text!
@@ -109,24 +118,9 @@ class AnnouncementAddViewController: UIViewController, UITextViewDelegate, UITex
         }
     }
     
-    //------------------------------------------------------------------------------
-    // Mark: UITextViewDelegate
-    //------------------------------------------------------------------------------
-    func textViewDidChange(textView: UITextView) {
-        //scrollToCursor()
-    }
-    
-    //------------------------------------------------------------------------------
-    // Mark: UITextFieldDelegate
-    //------------------------------------------------------------------------------
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        annTitleTextField.resignFirstResponder()
-        return true
-    }
-    
-    //------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     // Mark: Keyboard Methods
-    //------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     func keyboardDidShow (notification: NSNotification)
     {
         if let userInfo = notification.userInfo {
@@ -141,16 +135,6 @@ class AnnouncementAddViewController: UIViewController, UITextViewDelegate, UITex
         } else {
             // no userInfo dictionary in notification
         }
-        
-        // Keyboard
-//        let userInfo = notification.userInfo!
-//        let keyboardSize:CGSize = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGSizeValue()
-//        kbSize = keyboardSize;
-//        
-//        let keyboardRect:CGRect = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue();
-//        keyboardFrame = self.view.convertRect(keyboardRect, fromView: nil)
-//        
-        //scrollToCursor();
     }
     
     func keyboardWillHide (notification: NSNotification)
@@ -162,9 +146,10 @@ class AnnouncementAddViewController: UIViewController, UITextViewDelegate, UITex
     {
         annContentTextView .resignFirstResponder()
     }
-    //------------------------------------------------------------------------------
+    
+    //--------------------------------------------------------------------------
     // Mark: Private Methods
-    //------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     private func verify () -> Bool
     {
         if (annTitleTextField.text!.isEmpty)
@@ -182,6 +167,25 @@ class AnnouncementAddViewController: UIViewController, UITextViewDelegate, UITex
         return true;
     }
 
+}
 
+// *****************************************************************************
+// Mark: UITextViewDelegate
+// *****************************************************************************
+extension AnnouncementAddViewController : UITextViewDelegate
+{
+    func textViewDidChange(textView: UITextView) {
+        //scrollToCursor()
+    }
+}
 
+// *****************************************************************************
+// Mark: UITextFieldDelegate
+// *****************************************************************************
+extension AnnouncementAddViewController : UITextFieldDelegate
+{
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        annTitleTextField.resignFirstResponder()
+        return true
+    }
 }

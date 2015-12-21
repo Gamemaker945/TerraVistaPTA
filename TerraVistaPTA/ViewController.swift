@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class ViewController: UIViewController {
     
@@ -68,7 +69,14 @@ class ViewController: UIViewController {
             
         }
         else if (sender.state == UIGestureRecognizerState.Began){
-            self.performSegueWithIdentifier("SegueToLogin", sender: self)
+            if (LoginController.sharedInstance.getActiveUser() != nil)
+            {
+                self.performSegueWithIdentifier("SegueToAccount", sender: self)
+            }
+            else
+            {
+                self.performSegueWithIdentifier("SegueToLogin", sender: self)
+            }
         }
         
     }
@@ -89,7 +97,9 @@ class ViewController: UIViewController {
     
     @IBAction func logoutButtonPressed(sender: UIButton)
     {
+        PFUser.logOut()
         LoginController.sharedInstance.setLoggedIn(false);
+        LoginController.sharedInstance.setActiveUser(nil)
         self.updateAdminItems()
     }
     

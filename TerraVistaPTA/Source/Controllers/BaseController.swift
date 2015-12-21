@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Parse
 
 public class BaseController
 {
@@ -16,6 +17,16 @@ public class BaseController
     var parseArray: [ParseBase]
     var active: ParseBase?
     
+    subscript (index:Int) -> ParseBase? {
+        if (index > 0 && index < parseArray.count)
+        {
+            return nil;
+        }
+        else
+        {
+            return parseArray[index];
+        }
+    }
     
     //------------------------------------------------------------------------------
     // MARK: Init
@@ -106,18 +117,6 @@ public class BaseController
             }
         }
         return nil;
-    }
-    
-    func getAtIndex (index: Int) -> ParseBase?
-    {
-        if (index > 0 && index < parseArray.count)
-        {
-            return nil;
-        }
-        else
-        {
-            return parseArray[index];
-        }
     }
     
     func count () -> Int

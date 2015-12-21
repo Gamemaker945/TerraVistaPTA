@@ -8,11 +8,15 @@
 
 import UIKit
 
-class AnnouncementViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+// *****************************************************************************
+// AnnouncementViewController
+// *****************************************************************************
+class AnnouncementViewController: UIViewController
+{
     
-    //------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     // VARS
-    //------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     @IBOutlet var table: UITableView!
     @IBOutlet var editButton: UIButton!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
@@ -21,9 +25,9 @@ class AnnouncementViewController: UIViewController, UITableViewDataSource, UITab
     var isViewEditing = false
     
     
-    //------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     // Mark: Lifecycle Methods
-    //------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,113 +58,15 @@ class AnnouncementViewController: UIViewController, UITableViewDataSource, UITab
         }
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let backItem = UIBarButtonItem()
+        backItem.title = "Cancel"
+        navigationItem.backBarButtonItem = backItem // This will show in the next view controller being pushed
+    }
+    
     //------------------------------------------------------------------------------
-    // Mark: TableView Methods
+    // Mark: - Table Methods
     //------------------------------------------------------------------------------
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return nil
-    }
-    
-    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return nil
-    }
-    
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 0.01
-    }
-    
-    
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        // Not Admin User
-        if (LoginController.sharedInstance.getActiveUser() == nil)
-        {
-            return msgArray.count
-        }
-        else
-        {
-            return msgArray.count + 1
-        }
-    }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if (indexPath.row == msgArray.count)
-        {
-            return 58.0
-        }
-        else
-        {
-            let msg: Announcement = msgArray[indexPath.row]
-            return 43.0 + 47.0 + getCellContentHeight(msg.content as String)
-        }
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let CellIdentifier: String = "AnnoucementCell";
-        let AddCellIdentifier: String = "AddAnnoucementCell";
-        
-        if (indexPath.row == msgArray.count)
-        {
-            let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(AddCellIdentifier)!
-            cell.selectionStyle = UITableViewCellSelectionStyle.None;
-            return cell
-        }
-        else
-        {
-            let cell:AnnouncementTableViewCell = tableView.dequeueReusableCellWithIdentifier(CellIdentifier) as! AnnouncementTableViewCell
-            let msg: Announcement = msgArray[indexPath.row]
-            cell.setAnnouncement(msg)
-        
-            cell.selectionStyle = UITableViewCellSelectionStyle.None;
-            return cell
-        }
-    }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
-    {
-        // Not Admin User
-        if (indexPath.row == msgArray.count)
-        {
-            AnnouncementController.sharedInstance.setActive (nil)
-            self.performSegueWithIdentifier("SegueToEditAnnouncement", sender: self)
-        }
-            
-        else if (isViewEditing)
-        {
-            let msg: Announcement = msgArray[indexPath.row]
-            AnnouncementController.sharedInstance.setActive (msg)
-            self.performSegueWithIdentifier("SegueToEditAnnouncement", sender: self)
-            
-        }
-    }
-    
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == UITableViewCellEditingStyle.Delete {
-            let msg: Announcement = msgArray[indexPath.row]
-            self.deleteMsg(msg)
-        }
-    }
-    
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return !(indexPath.row == msgArray.count)
-    }
-    
-    func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return false;
-    }
-    
-    func tableView(tableView: UITableView, shouldIndentWhileEditingRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true;
-    }
-    
-    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
-        return UITableViewCellEditingStyle.Delete
-    }
-    
     private func getCellContentHeight (label: String) -> CGFloat
     {
         //let constraint:CGSize = CGSizeMake(self.view.frame.size.width - 32, 100000.0);
@@ -172,7 +78,7 @@ class AnnouncementViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     //------------------------------------------------------------------------------
-    // MARK: - WebLinkTableViewCellProtocol Methods
+    // MARK: - Private Methods
     //------------------------------------------------------------------------------
     func deleteMsg (msg: Announcement)
     {
@@ -221,3 +127,130 @@ class AnnouncementViewController: UIViewController, UITableViewDataSource, UITab
     }
     
 }
+
+
+// *****************************************************************************
+// MARK: - UITableViewDataSource
+// *****************************************************************************
+
+extension AnnouncementViewController : UITableViewDataSource
+{
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        // Not Admin User
+        if (LoginController.sharedInstance.getActiveUser() == nil)
+        {
+            return msgArray.count
+        }
+        else
+        {
+            return msgArray.count + 1
+        }
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let CellIdentifier: String = "AnnoucementCell";
+        let AddCellIdentifier: String = "AddAnnoucementCell";
+        
+        if (indexPath.row == msgArray.count)
+        {
+            let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(AddCellIdentifier)!
+            cell.selectionStyle = UITableViewCellSelectionStyle.None;
+            return cell
+        }
+        else
+        {
+            let cell:AnnouncementTableViewCell = tableView.dequeueReusableCellWithIdentifier(CellIdentifier) as! AnnouncementTableViewCell
+            let msg: Announcement = msgArray[indexPath.row]
+            cell.setAnnouncement(msg)
+            
+            cell.selectionStyle = UITableViewCellSelectionStyle.None;
+            return cell
+        }
+    }
+
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.Delete {
+            let msg: Announcement = msgArray[indexPath.row]
+            self.deleteMsg(msg)
+        }
+    }
+    
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return !(indexPath.row == msgArray.count)
+    }
+    
+    func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return false;
+    }
+    
+}
+
+
+// *****************************************************************************
+// MARK: - UITableViewDelegate
+// *****************************************************************************
+
+extension AnnouncementViewController : UITableViewDelegate
+{
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return nil
+    }
+    
+    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return nil
+    }
+    
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0.01
+    }
+    
+    
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if (indexPath.row == msgArray.count)
+        {
+            return 58.0
+        }
+        else
+        {
+            let msg: Announcement = msgArray[indexPath.row]
+            return 43.0 + 47.0 + getCellContentHeight(msg.content as String)
+        }
+    }
+    
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    {
+        // Not Admin User
+        if (indexPath.row == msgArray.count)
+        {
+            AnnouncementController.sharedInstance.setActive (nil)
+            self.performSegueWithIdentifier("SegueToEditAnnouncement", sender: self)
+        }
+            
+        else if (isViewEditing)
+        {
+            let msg: Announcement = msgArray[indexPath.row]
+            AnnouncementController.sharedInstance.setActive (msg)
+            self.performSegueWithIdentifier("SegueToEditAnnouncement", sender: self)
+            
+        }
+    }
+    
+    
+    
+    func tableView(tableView: UITableView, shouldIndentWhileEditingRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true;
+    }
+    
+    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+        return UITableViewCellEditingStyle.Delete
+    }
+}
+
+

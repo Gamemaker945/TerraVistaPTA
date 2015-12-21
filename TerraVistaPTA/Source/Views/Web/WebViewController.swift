@@ -6,12 +6,13 @@
 //  Copyright (c) 2015 Brain Glove Apps. All rights reserved.
 //
 import UIKit
+import Parse
 
-class WebViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class WebViewController: UIViewController {
 
-    //------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     // MARK: - Outlets
-    //------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     @IBOutlet var table: UITableView!
     @IBOutlet var editButton: UIButton!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
@@ -19,9 +20,9 @@ class WebViewController: UIViewController, UITableViewDataSource, UITableViewDel
     var isViewEditing = false
     var linkArray:[WebLink] = []
     
-    //------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     // MARK: - Lifecycle Methods
-    //------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
 
     override func viewDidLoad()
     {
@@ -53,24 +54,66 @@ class WebViewController: UIViewController, UITableViewDataSource, UITableViewDel
         }
     }
     
-    //------------------------------------------------------------------------------
-    // MARK: - TableView Methods
-    //------------------------------------------------------------------------------
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?
-    {
-        return nil
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let backItem = UIBarButtonItem()
+        backItem.title = "Cancel"
+        navigationItem.backBarButtonItem = backItem 
     }
     
-    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView?
-    {
-        return nil
+    //--------------------------------------------------------------------------
+    // MARK: - IBAction Methods
+    //--------------------------------------------------------------------------
+    @IBAction func editButtonPressed(sender: AnyObject) {
+        if (isViewEditing)
+        {
+            isViewEditing = false
+            self.table.setEditing(false, animated: true)
+            self.editButton.setTitle("Edit", forState: UIControlState.Normal)
+        }
+        else
+        {
+            isViewEditing = true
+            self.table.setEditing(true, animated: true)
+            self.editButton.setTitle("Done", forState: UIControlState.Normal)
+        }
     }
     
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat
+    //--------------------------------------------------------------------------
+    // MARK: - Private Methods
+    //--------------------------------------------------------------------------
+    func deleteLink (link: WebLink)
     {
-        return 0.01
+        let alert = UIAlertController(title: "Confirmation", message: "Are you sure you want to delete this link?", preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "No",  style: UIAlertActionStyle.Cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: { action in
+            self.activityIndicator.startAnimating()
+            WebLinkController.sharedInstance.delete(link, completion: { (hasError, error) -> Void in
+                
+                self.activityIndicator.stopAnimating()
+                if (!hasError)
+                {
+                    self.linkArray = WebLinkController.sharedInstance.getParseObjects() as! [WebLink]
+                    self.table.reloadData()
+                }
+                else
+                {
+                    ParseErrorHandler.showError(self, errorCode: error?.code)
+                }
+            })
+        }))
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
+
+}
+
+
+// *****************************************************************************
+// MARK: - UITableViewDataSource
+// *****************************************************************************
+
+extension WebViewController : UITableViewDataSource
+{
     func numberOfSectionsInTableView(tableView: UITableView) -> Int
     {
         return 1
@@ -110,61 +153,13 @@ class WebViewController: UIViewController, UITableViewDataSource, UITableViewDel
             return cell
         }
     }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
-    {
-        // Not Admin User
-        if (indexPath.row == linkArray.count)
-        {
-            WebLinkController.sharedInstance.setActive (nil)
-            self.performSegueWithIdentifier("SegueToEditWebLink", sender: self)
-        }
-        
-        else if (isViewEditing)
-        {
-            let link: WebLink = linkArray[indexPath.row]
-            WebLinkController.sharedInstance.setActive (link)
-            self.performSegueWithIdentifier("SegueToEditWebLink", sender: self)
 
-        }
-        else
-        {
-            let link: WebLink = linkArray[indexPath.row]
-            var urlStr = link.urlStr
-            if (urlStr.rangeOfString("http://") == nil) {
-                urlStr = "http://" + urlStr
-            }
-
-            let url: NSURL = NSURL(string: urlStr)!
-            
-            if (!UIApplication.sharedApplication().openURL(url)) {
-                 ParseErrorHandler.showError(self, errorMsg:"It appears this is not a valid link or the link is not responding. Please wait a bit and try again or contact the applicaiton administrator.")
-            }
-
-        }
-    }
-    
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == UITableViewCellEditingStyle.Delete {
-            let link: WebLink = linkArray[indexPath.row]
-            self.deleteLink(link)
-        }
-    }
-    
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return !(indexPath.row == linkArray.count)
     }
     
     func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return true;
-    }
-    
-    func tableView(tableView: UITableView, shouldIndentWhileEditingRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true;
-    }
-    
-    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
-        return UITableViewCellEditingStyle.Delete
     }
     
     func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
@@ -185,45 +180,78 @@ class WebViewController: UIViewController, UITableViewDataSource, UITableViewDel
         
         PFObject.saveAllInBackground(pfObjArray)
     }
-    
-    //------------------------------------------------------------------------------
-    // MARK: - WebLinkTableViewCellProtocol Methods
-    //------------------------------------------------------------------------------
-    func deleteLink (link: WebLink)
+
+}
+
+// *****************************************************************************
+// MARK: - UITableViewDelegate
+// *****************************************************************************
+
+extension WebViewController : UITableViewDelegate
+{
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?
     {
-        let alert = UIAlertController(title: "Confirmation", message: "Are you sure you want to delete this link?", preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "No",  style: UIAlertActionStyle.Cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: { action in
-            self.activityIndicator.startAnimating()
-            WebLinkController.sharedInstance.delete(link, completion: { (hasError, error) -> Void in
-                
-                self.activityIndicator.stopAnimating()
-                if (!hasError)
-                {
-                    self.linkArray = WebLinkController.sharedInstance.getParseObjects() as! [WebLink]
-                    self.table.reloadData()
-                }
-                else
-                {
-                    ParseErrorHandler.showError(self, errorCode: error?.code)
-                }
-            })
-        }))
-        self.presentViewController(alert, animated: true, completion: nil)
+        return nil
     }
     
-    @IBAction func editButtonPressed(sender: AnyObject) {
-        if (isViewEditing)
+    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView?
+    {
+        return nil
+    }
+    
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat
+    {
+        return 0.01
+    }
+    
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    {
+        // Not Admin User
+        if (indexPath.row == linkArray.count)
         {
-            isViewEditing = false
-            self.table.setEditing(false, animated: true)
-            self.editButton.setTitle("Edit", forState: UIControlState.Normal)
+            WebLinkController.sharedInstance.setActive (nil)
+            self.performSegueWithIdentifier("SegueToEditWebLink", sender: self)
+        }
+            
+        else if (isViewEditing)
+        {
+            let link: WebLink = linkArray[indexPath.row]
+            WebLinkController.sharedInstance.setActive (link)
+            self.performSegueWithIdentifier("SegueToEditWebLink", sender: self)
+            
         }
         else
         {
-            isViewEditing = true
-            self.table.setEditing(true, animated: true)
-            self.editButton.setTitle("Done", forState: UIControlState.Normal)
+            let link: WebLink = linkArray[indexPath.row]
+            var urlStr = link.urlStr
+            if (urlStr.rangeOfString("http://") == nil) {
+                urlStr = "http://" + urlStr
+            }
+            
+            let url: NSURL = NSURL(string: urlStr)!
+            
+            if (!UIApplication.sharedApplication().openURL(url)) {
+                ParseErrorHandler.showError(self, errorMsg:"It appears this is not a valid link or the link is not responding. Please wait a bit and try again or contact the applicaiton administrator.")
+            }
+            
         }
     }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.Delete {
+            let link: WebLink = linkArray[indexPath.row]
+            self.deleteLink(link)
+        }
+    }
+    
+    
+    func tableView(tableView: UITableView, shouldIndentWhileEditingRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true;
+    }
+    
+    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+        return UITableViewCellEditingStyle.Delete
+    }
+
 }

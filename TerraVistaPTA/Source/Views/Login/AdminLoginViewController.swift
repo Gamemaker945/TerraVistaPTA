@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class AdminLoginViewController: UIViewController {
     
@@ -23,7 +24,7 @@ class AdminLoginViewController: UIViewController {
 
     
     //------------------------------------------------------------------------------
-    // Mark: Lifecycle Methods
+    // Mark: - Lifecycle Methods
     //------------------------------------------------------------------------------
 
 
@@ -46,9 +47,14 @@ class AdminLoginViewController: UIViewController {
         
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let backItem = UIBarButtonItem()
+        backItem.title = "Back"
+        navigationItem.backBarButtonItem = backItem // This will show in the next view controller being pushed
+    }
 
     //------------------------------------------------------------------------------
-    // Mark: IBAction Methods
+    // Mark: - IBAction Methods
     //------------------------------------------------------------------------------
 
     @IBAction func loginPressed(sender: UIButton)

@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import Parse
 
-class CalendarEditDetailsViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate
+class CalendarEditDetailsViewController: UIViewController
 {
 
-    //------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     // VARS
-    //------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     @IBOutlet var iconBg: UIView!
     @IBOutlet var iconLabel: UILabel!
     @IBOutlet var titleTextField: UITextField!
@@ -35,10 +36,11 @@ class CalendarEditDetailsViewController: UIViewController, UITextViewDelegate, U
     private var whenDate: NSDate?
     private var iconIndex:Int = 0
     
+    private var activePicker: UIDatePicker?
     
-    //------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     // Mark: Lifecycle Methods
-    //------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,67 +107,36 @@ class CalendarEditDetailsViewController: UIViewController, UITextViewDelegate, U
     //------------------------------------------------------------------------------
     // Mark: UITextFieldDelegate
     //------------------------------------------------------------------------------
-    func textFieldDidBeginEditing(textField: UITextField) {
-        activeView = textField
-        
-//        if (textField == whenTextField)
-//        {
-//            var datePickerView  : UIDatePicker = UIDatePicker()
-//            datePickerView.datePickerMode = UIDatePickerMode.Time
-//            whenTextField.inputView = datePickerView
-//            datePickerView.addTarget(self, action: Selector("handleDatePicker:"), forControlEvents: UIControlEvents.ValueChanged)
-//        }
-    }
 
-    func textFieldDidEndEditing(textField: UITextField) {
-        activeView = nil;
-        textField.resignFirstResponder()
-    }
-    
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true;
-    }
-    
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-        if (textField == whenTextField || textField == startTextField || textField == endTextField)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-    }
     
     
     @IBAction func dp(sender: UITextField) {
         
         activeView = sender
-        let datePickerView  : UIDatePicker = UIDatePicker()
-        datePickerView.datePickerMode = UIDatePickerMode.Date
-        sender.inputView = datePickerView
-        datePickerView.addTarget(self, action: Selector("handleDatePicker:"), forControlEvents: UIControlEvents.ValueChanged)
+        activePicker = UIDatePicker()
+        activePicker!.datePickerMode = UIDatePickerMode.Date
+        sender.inputView = activePicker
+        activePicker!.addTarget(self, action: Selector("handleDatePicker:"), forControlEvents: UIControlEvents.ValueChanged)
         
     }
     
     @IBAction func tpstart(sender: UITextField) {
         
         activeView = sender
-        let datePickerView  : UIDatePicker = UIDatePicker()
-        datePickerView.datePickerMode = UIDatePickerMode.Time
-        sender.inputView = datePickerView
-        datePickerView.addTarget(self, action: Selector("handleStartTimePicker:"), forControlEvents: UIControlEvents.ValueChanged)
+        activePicker = UIDatePicker()
+        activePicker!.datePickerMode = UIDatePickerMode.Time
+        sender.inputView = activePicker
+        activePicker!.addTarget(self, action: Selector("handleStartTimePicker:"), forControlEvents: UIControlEvents.ValueChanged)
         
     }
     
     @IBAction func tpend(sender: UITextField) {
         
         activeView = sender
-        let datePickerView  : UIDatePicker = UIDatePicker()
-        datePickerView.datePickerMode = UIDatePickerMode.Time
-        sender.inputView = datePickerView
-        datePickerView.addTarget(self, action: Selector("handleEndTimePicker:"), forControlEvents: UIControlEvents.ValueChanged)
+        activePicker = UIDatePicker()
+        activePicker!.datePickerMode = UIDatePickerMode.Time
+        sender.inputView = activePicker
+        activePicker!.addTarget(self, action: Selector("handleEndTimePicker:"), forControlEvents: UIControlEvents.ValueChanged)
         
     }
     
@@ -190,10 +161,6 @@ class CalendarEditDetailsViewController: UIViewController, UITextViewDelegate, U
         }
     }
     
-    @IBAction func cancelPressed (sender: UIButton)
-    {
-        self.navigationController?.popViewControllerAnimated(true)
-    }
     
     func iconTouched ()
     {
@@ -201,20 +168,9 @@ class CalendarEditDetailsViewController: UIViewController, UITextViewDelegate, U
         self.performSegueWithIdentifier("SegueToEntryType", sender: self)
     }
     
-    //------------------------------------------------------------------------------
-    // Mark: UITextViewDelegate
-    //------------------------------------------------------------------------------
-    func textViewDidBeginEditing(textView: UITextView) {
-        activeView = textView
-    }
-    
-    func textViewDidEndEditing(textView: UITextView) {
-        activeView = nil;
-    }
-
-    //------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     // Mark: Keyboard Methods
-    //------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     func keyboardDidShow (notification: NSNotification)
     {
 
@@ -229,9 +185,9 @@ class CalendarEditDetailsViewController: UIViewController, UITextViewDelegate, U
     }
     
 
-    //------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     // Mark: Private Methods
-    //------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     func loadCalendarEntry()
     {
         let entry:CalendarEntry? = CalendarController.sharedInstance.getActive() as? CalendarEntry
@@ -315,6 +271,23 @@ class CalendarEditDetailsViewController: UIViewController, UITextViewDelegate, U
     
     func doneButtonClickedDismissKeyboard()
     {
+        
+        if (activePicker != nil)
+        {
+            if (activeView == whenTextField)
+            {
+                self.handleDatePicker(activePicker!)
+            }
+            else if (activeView == startTextField)
+            {
+                self.handleStartTimePicker(activePicker!)
+            }
+            else if (activeView == endTextField)
+            {
+                self.handleEndTimePicker(activePicker!)
+            }
+        }
+        
         if (activeView == whenTextField)
         {
             if (whenDate == nil)
@@ -326,6 +299,7 @@ class CalendarEditDetailsViewController: UIViewController, UITextViewDelegate, U
             }
         }
         activeView?.resignFirstResponder()
+        activePicker = nil
     }
     
     func handleDatePicker(sender: UIDatePicker) {
@@ -384,6 +358,46 @@ class CalendarEditDetailsViewController: UIViewController, UITextViewDelegate, U
         
         return true;
     }
+}
 
+
+extension CalendarEditDetailsViewController : UITextViewDelegate
+{
+    func textViewDidBeginEditing(textView: UITextView) {
+        activeView = textView
+    }
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        activeView = nil;
+    }
 
 }
+
+extension CalendarEditDetailsViewController : UITextFieldDelegate
+{
+    func textFieldDidBeginEditing(textField: UITextField) {
+        activeView = textField
+    }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        activeView = nil;
+        textField.resignFirstResponder()
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true;
+    }
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        if (textField == whenTextField || textField == startTextField || textField == endTextField)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+}
+
