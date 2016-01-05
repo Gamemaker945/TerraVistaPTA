@@ -19,11 +19,12 @@ class AnnouncementAddViewController: UIViewController
     //--------------------------------------------------------------------------
     @IBOutlet weak var bgView: UIView!
     
+    @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var annTitleTextField: UITextField!
-    @IBOutlet weak var annContentTextView: UITextView!
+    var annContentTextView: UITextView!
     
-    @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var okButton: UIButton!
+    @IBOutlet weak var pushButton: UIButton!
     
     @IBOutlet var contentHtConstraint: NSLayoutConstraint!
     @IBOutlet var navTitle: UINavigationItem!
@@ -34,6 +35,8 @@ class AnnouncementAddViewController: UIViewController
     //--------------------------------------------------------------------------
     var kbSize: CGSize!
     var keyboardFrame: CGRect!
+    var generatePush = false
+    var contentHeight: CGFloat!
     
     //--------------------------------------------------------------------------
     // Mark: Lifecycle Methods
@@ -46,10 +49,22 @@ class AnnouncementAddViewController: UIViewController
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidShow:", name: UIKeyboardDidShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
         
+        annTitleTextField.delegate = self;
+        
+    }
+    
+    override func viewWillAppear(animated: Bool)
+    {
+        super.viewWillAppear(animated)
+        self.bgView.layoutIfNeeded()
+        
+        let myY = contentLabel.frame.origin.y + contentLabel.frame.size.height + 8
+        contentHeight = pushButton.frame.origin.y - myY - 66
+        annContentTextView = UITextView(frame: CGRectMake(pushButton.frame.origin.x, myY, pushButton.frame.size.width, contentHeight))
         annContentTextView.layer.borderColor = UIColor.lightGrayColor().CGColor
         annContentTextView.layer.borderWidth = 1
         annContentTextView.layer.cornerRadius = 5
-    
+        
         let screenBounds:CGRect = UIScreen.mainScreen().bounds
         
         let doneToolbar:UIToolbar = UIToolbar (frame: CGRectMake(0, 0, screenBounds.size.width, 30))
@@ -60,15 +75,9 @@ class AnnouncementAddViewController: UIViewController
         annContentTextView.inputAccessoryView = doneToolbar
         
         annContentTextView.delegate = self;
-        annTitleTextField.delegate = self;
+        bgView.addSubview(annContentTextView)
         
-    }
-    
-    override func viewWillAppear(animated: Bool)
-    {
-        super.viewWillAppear(animated)
-        
-        contentHtConstraint.constant = okButton.frame.origin.y - annContentTextView.frame.origin.y - 8;
+        //contentHtConstraint.constant = okButton.frame.origin.y - annContentTextView.frame.origin.y - 8;
         
         let msg:Announcement? = AnnouncementController.sharedInstance.getActive () as? Announcement
         if (msg != nil)
@@ -118,6 +127,13 @@ class AnnouncementAddViewController: UIViewController
         }
     }
     
+    @IBAction func generatePushPressed(sender: UIButton)
+    {
+        generatePush = !generatePush
+        pushButton.selected = generatePush
+    }
+    
+    
     //--------------------------------------------------------------------------
     // Mark: Keyboard Methods
     //--------------------------------------------------------------------------
@@ -127,7 +143,9 @@ class AnnouncementAddViewController: UIViewController
             if let keyboardSize = (userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
                 
                 let kbY = self.view.frame.size.height - keyboardSize.height
-                contentHtConstraint.constant = kbY - annContentTextView.frame.origin.y - 68;
+                var frame = annContentTextView.frame
+                frame.size.height = kbY - annContentTextView.frame.origin.y - 72;
+                annContentTextView.frame = frame
                 self.view.layoutIfNeeded()
             } else {
                 // no UIKeyboardFrameBeginUserInfoKey entry in userInfo
@@ -139,7 +157,10 @@ class AnnouncementAddViewController: UIViewController
     
     func keyboardWillHide (notification: NSNotification)
     {
-        contentHtConstraint.constant = okButton.frame.origin.y - annContentTextView.frame.origin.y - 8;
+        var frame = annContentTextView.frame
+        frame.size.height = contentHeight;
+        annContentTextView.frame = frame
+        //contentHtConstraint.constant = okButton.frame.origin.y - annContentTextView.frame.origin.y - 8;
     }
 
     func doneButtonClickedDismissKeyboard ()
