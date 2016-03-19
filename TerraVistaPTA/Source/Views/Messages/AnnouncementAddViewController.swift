@@ -7,13 +7,12 @@
 //
 
 import UIKit
-import Parse
 
 // *****************************************************************************
 // *****************************************************************************
-class AnnouncementAddViewController: UIViewController
+class AnnouncementAddViewController: UIViewController, UIAlertViewDelegate
 {
-
+    
     //--------------------------------------------------------------------------
     // Outlets
     //--------------------------------------------------------------------------
@@ -26,7 +25,6 @@ class AnnouncementAddViewController: UIViewController
     @IBOutlet weak var okButton: UIButton!
     @IBOutlet weak var pushButton: UIButton!
     
-    @IBOutlet var contentHtConstraint: NSLayoutConstraint!
     @IBOutlet var navTitle: UINavigationItem!
     
     
@@ -101,29 +99,86 @@ class AnnouncementAddViewController: UIViewController
     {
         if (verify())
         {
+            var isNew = false
             let title = annTitleTextField.text!
             let content = annContentTextView.text!
             
             var msg:Announcement? = AnnouncementController.sharedInstance.getActive () as? Announcement;
             if (msg == nil)
             {
-                msg = Announcement()
-                msg?.pObj = PFObject(className:"PAnnouncement")
-                msg?.pObj!.ACL = PFACL(user: PFUser.currentUser()!)
-                msg?.pObj!.ACL?.setPublicReadAccess(true)
+                msg = AnnouncementController.sharedInstance.createEntry()
+                isNew = true
             }
             msg?.title = title
             msg?.content = content
             
-            AnnouncementController.sharedInstance.update (msg!, completion: { (hasError, error) -> Void in
-                if (!hasError) {
+            if self.generatePush {
+                
+                let alert = UIAlertController (title: "Notice", message: "This announcement will generate a push notification to all users. Is this ok?", preferredStyle: UIAlertControllerStyle.Alert)
+                let yesButton = UIAlertAction (title: "Yes", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
                     
-                    self.navigationController?.popViewControllerAnimated(true)
+                    AnnouncementController.sharedInstance.update (msg!, completion: { (hasError, error) -> Void in
+                        if (!hasError) {
+                            
+                            dispatch_async(dispatch_get_main_queue()) {
+                                
+                                if isNew {
+                                    AnnouncementController.sharedInstance.insertObject(msg!)
+                                }
+
+                                if (!hasError)
+                                {
+                                    self.navigationController?.popViewControllerAnimated(true)
+                                }
+                                else
+                                {
+                                    print("Error: \(error!) \(error!.userInfo)")
+                                    ParseErrorHandler.showError(self, errorCode: error?.code)
+                                }
+                            }
+                            
+                        } else {
+                            ParseErrorHandler.showError(self, errorCode: error?.code)
+                        }
+                    })
                     
-                } else {
-                    ParseErrorHandler.showError(self, errorCode: error?.code)
-                }
-            })
+                    alert.dismissViewControllerAnimated(true, completion: { () -> Void in
+                        
+                    })
+                })
+                
+                let noButton = UIAlertAction(title: "No", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+                    alert.dismissViewControllerAnimated(true, completion: nil)
+                })
+                
+                alert.addAction(yesButton)
+                alert.addAction(noButton)
+                self.presentViewController(alert, animated: true, completion: nil)
+                
+            } else {
+                AnnouncementController.sharedInstance.update (msg!, completion: { (hasError, error) -> Void in
+                    if (!hasError) {
+                        dispatch_async(dispatch_get_main_queue()) {
+                            
+                            if isNew {
+                                AnnouncementController.sharedInstance.insertObject(msg!)
+                            }
+                            
+                            if (!hasError)
+                            {
+                                self.navigationController?.popViewControllerAnimated(true)
+                            }
+                            else
+                            {
+                                print("Error: \(error!) \(error!.userInfo)")
+                                ParseErrorHandler.showError(self, errorCode: error?.code)
+                            }
+                        }
+                    } else {
+                        ParseErrorHandler.showError(self, errorCode: error?.code)
+                    }
+                })
+            }
         }
     }
     
@@ -162,7 +217,7 @@ class AnnouncementAddViewController: UIViewController
         annContentTextView.frame = frame
         //contentHtConstraint.constant = okButton.frame.origin.y - annContentTextView.frame.origin.y - 8;
     }
-
+    
     func doneButtonClickedDismissKeyboard ()
     {
         annContentTextView .resignFirstResponder()
@@ -187,7 +242,7 @@ class AnnouncementAddViewController: UIViewController
         
         return true;
     }
-
+    
 }
 
 // *****************************************************************************

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Parse
 
 class AdminPasswordViewController: UIViewController
 {
@@ -48,25 +47,25 @@ class AdminPasswordViewController: UIViewController
         if (self.verifyInput())
         {
             activityIndicator.startAnimating()
-            if let email = self.emailTextField.text
-            {
-                PFUser.requestPasswordResetForEmailInBackground(email, block: { (hasError, error) -> Void in
-                    if (error == nil) {
-                        self.activityIndicator.stopAnimating()
-                        let msg = "Reset instructions have been sent to the email provided. Please check for them shortly and act accordingly."
-                        let alert = UIAlertController(title: " ", message: msg, preferredStyle: UIAlertControllerStyle.Alert)
-                        alert.addAction(UIAlertAction(title: "OK",  style: UIAlertActionStyle.Cancel, handler: { (action: UIAlertAction) -> Void in
-                            self.navigationController?.popToRootViewControllerAnimated(true)
-                        }))
-                            
-                        self.presentViewController(alert, animated: true, completion: nil)
-                    } else {
-                        // Log details of the failure
-                        ParseErrorHandler.showErrorWithTitle(self, title: "Reset Error", errorCode: error?.code)
-                    }
-                    self.activityIndicator.stopAnimating()
-                })
-            }
+//            if let email = self.emailTextField.text
+//            {
+//                PFUser.requestPasswordResetForEmailInBackground(email, block: { (hasError, error) -> Void in
+//                    if (error == nil) {
+//                        self.activityIndicator.stopAnimating()
+//                        let msg = "Reset instructions have been sent to the email provided. Please check for them shortly and act accordingly."
+//                        let alert = UIAlertController(title: " ", message: msg, preferredStyle: UIAlertControllerStyle.Alert)
+//                        alert.addAction(UIAlertAction(title: "OK",  style: UIAlertActionStyle.Cancel, handler: { (action: UIAlertAction) -> Void in
+//                            self.navigationController?.popToRootViewControllerAnimated(true)
+//                        }))
+//                            
+//                        self.presentViewController(alert, animated: true, completion: nil)
+//                    } else {
+//                        // Log details of the failure
+//                        ParseErrorHandler.showErrorWithTitle(self, title: "Reset Error", errorCode: error?.code)
+//                    }
+//                    self.activityIndicator.stopAnimating()
+//                })
+//            }
         }
     }
     

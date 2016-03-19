@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Parse
 
 class AdminUpdateViewController: UIViewController
 {
@@ -31,18 +30,18 @@ class AdminUpdateViewController: UIViewController
 
         self.usernameTextField.delegate = self;
         self.passwordTextField.delegate = self;
-        self.emailTextField.delegate = self;
+        //self.emailTextField.delegate = self;
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if let user = PFUser.currentUser()
-        {
-            self.usernameTextField.text = user.username
-            self.passwordTextField.text = user.password
-            self.emailTextField.text = user.email
-        }
+//        if let user = PFUser.currentUser()
+//        {
+//            self.usernameTextField.text = user.username
+//            self.passwordTextField.text = user.password
+//            self.emailTextField.text = user.email
+//        }
         
         self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
@@ -61,30 +60,21 @@ class AdminUpdateViewController: UIViewController
         if (self.verifyInput())
         {
             activityIndicator.startAnimating()
-            if let user:PFUser = PFUser.currentUser()
-            {
-                if self.usernameTextField.isEmpty() == false {
-                    user.username = self.usernameTextField.text
-                }
-                
-                if self.passwordTextField.isEmpty() == false {
-                    user.password = self.passwordTextField.text
-                }
-                
-                if self.emailTextField.isEmpty() == false {
-                    user.email = self.emailTextField.text
-                }
-                
-                user.saveInBackgroundWithBlock({ (hasError, error) -> Void in
-                    if (error == nil) {
+            LoginController.sharedInstance.update(self.usernameTextField.text!, password: self.passwordTextField.text!, completion:
+            { (error) -> Void in
+                if (error == nil) {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        
                         self.activityIndicator.stopAnimating()
-                        self.navigationController?.popViewControllerAnimated(true)
-                    } else {
-                        // Log details of the failure
-                        ParseErrorHandler.showErrorWithTitle(self, title: "Update Error", errorCode: error?.code)
+                        self.navigationController?.popToRootViewControllerAnimated(true);
                     }
-                })
-            }
+                } else {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.activityIndicator.stopAnimating()
+                        ParseErrorHandler.showError(self, errorCode: error?.code)
+                    }
+                }
+            })
         }
     }
     
@@ -105,11 +95,11 @@ class AdminUpdateViewController: UIViewController
             return false
         }
         
-        else if self.emailTextField.isEmpty() == false && !emailTextField.validateEmailInput()
-        {
-            ParseErrorHandler.showError(self, errorMsg: "Invalid Email. Please check the format of the email address and try again.")
-            return false
-        }
+//        else if self.emailTextField.isEmpty() == false && !emailTextField.validateEmailInput()
+//        {
+//            ParseErrorHandler.showError(self, errorMsg: "Invalid Email. Please check the format of the email address and try again.")
+//            return false
+//        }
         
         return true
     }

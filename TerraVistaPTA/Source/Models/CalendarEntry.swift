@@ -7,67 +7,67 @@
 //
 
 import Foundation
+import CloudKit
 
-
-public class CalendarEntry : ParseBase
+public class CalendarEntry : CKBase
 {
     public var title: String
         {
         get {
-            return pObj!["title"] as! String
+            return rObj!["title"] as! String
         }
         set (newtitle) {
-            pObj!["title"] = newtitle
+            rObj!["title"] = newtitle
         }
     }
     
-    public var location: String
+    public var location: String?
         {
         get {
-            return pObj!["location"] as! String
+            return rObj!["location"] as? String
         }
         set (newloc) {
-            pObj!["location"] = newloc
+            rObj!["location"] = newloc
         }
     }
     
-    public var info: String
+    public var info: String?
         {
         get {
-            return pObj!["info"] as! String
+            return rObj!["info"] as? String
         }
         set (newinfo) {
-            pObj!["info"] = newinfo
+            rObj!["info"] = newinfo
         }
     }
     
     public var iconIndex: Int
         {
         get {
-            return pObj!["iconIndex"] as! Int
+            return rObj!["iconIndex"] as! Int
         }
         set (newvalue) {
-            pObj!["iconIndex"] = newvalue
+            rObj!["iconIndex"] = newvalue
         }
     }
     
     public var startDate: NSDate?
         {
         get {
-            return pObj!["startDate"] as? NSDate
+            return rObj!["startDate"] as? NSDate
         }
         set (newDate) {
-            pObj!["startDate"] = newDate
+            rObj!["startDate"] = newDate
         }
     }
     
     public var stopDate: NSDate?
         {
         get {
-            return pObj!["stopDate"] as? NSDate
+            return rObj!["stopDate"] as? NSDate
         }
         set (newDate) {
-            pObj!["stopDate"] = newDate
+            rObj!["stopDate"] = newDate
         }
     }
 

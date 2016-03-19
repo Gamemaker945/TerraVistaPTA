@@ -7,37 +7,37 @@
 //
 
 import Foundation
-import Parse
+import CloudKit
 
-public class WebLink : ParseBase
+public class WebLink : CKBase
 {
     public var title: String
         {
             get {
-                return pObj!["title"] as! String
+                return rObj!["title"] as! String
             }
             set (newtitle) {
-                pObj!["title"] = newtitle
+                rObj!["title"] = newtitle
             }
         }
     
     public var urlStr: String
         {
         get {
-            return pObj!["url"] as! String
+            return rObj!["url"] as! String
         }
         set (newurl) {
-            pObj!["url"] = newurl
+            rObj!["url"] = newurl
         }
     }
     
     public var order: Int
         {
         get {
-            return pObj!["order"] as! Int
+            return rObj!["order"] as! Int
         }
         set (newvalue) {
-            pObj!["order"] = newvalue
+            rObj!["order"] = newvalue
         }
     }
     
@@ -46,9 +46,9 @@ public class WebLink : ParseBase
         super.init()
     }
     
-    override func initWithParse (parseObj: PFObject)
+    override func initWithCloudKit (rObj: CKRecord)
     {
-        super.initWithParse(parseObj)
+        super.initWithCloudKit(rObj)
     }
     
 }

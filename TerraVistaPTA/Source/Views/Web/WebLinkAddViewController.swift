@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Brain Glove Apps. All rights reserved.
 //
 import UIKit
-import Parse
+
 
 class WebLinkAddViewController: UIViewController {
     
@@ -22,6 +22,7 @@ class WebLinkAddViewController: UIViewController {
     @IBOutlet weak var okButton: UIButton!
     
     @IBOutlet var navTitle: UINavigationItem!
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
     
     //------------------------------------------------------------------------------
@@ -51,6 +52,7 @@ class WebLinkAddViewController: UIViewController {
     @IBAction func okPressed (sender: UIButton) {
         if (verify())
         {
+            var isNew = false
             let title = linkTitleTextField.text!
             
             var url:String = linkURLTextField.text!
@@ -62,19 +64,33 @@ class WebLinkAddViewController: UIViewController {
             var link:WebLink? = WebLinkController.sharedInstance.getActive() as? WebLink;
             if (link == nil)
             {
-                link = WebLink()
-                link?.pObj = PFObject(className:"PWebLink")
-                link?.pObj!.ACL = PFACL(user: PFUser.currentUser()!)
-                link?.pObj!.ACL?.setPublicReadAccess(true)
+                link = WebLinkController.sharedInstance.createEntry()
                 link?.order = WebLinkController.sharedInstance.count()
+                isNew = true
             }
             link?.title = title
             link?.urlStr = urlStr
             
+            activityIndicator.startAnimating()
             WebLinkController.sharedInstance.update(link!, completion: { (hasError, error) -> Void in
                 if (!hasError) {
                     
-                    self.navigationController?.popViewControllerAnimated(true)
+                    if isNew {
+                        WebLinkController.sharedInstance.insertObject (link!)
+                    }
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.activityIndicator.stopAnimating()
+                        if (!hasError)
+                        {
+                            self.navigationController?.popViewControllerAnimated(true)
+                        }
+                        else
+                        {
+                            print("Error: \(error!) \(error!.userInfo)")
+                            ParseErrorHandler.showError(self, errorCode: error?.code)
+                        }
+                        
+                    }
                     
                 } else {
                     ParseErrorHandler.showError(self, errorCode: error?.code)
@@ -82,7 +98,7 @@ class WebLinkAddViewController: UIViewController {
             })
         }
     }
-
+    
     
     private func verify () -> Bool
     {

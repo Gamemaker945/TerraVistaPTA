@@ -8,12 +8,24 @@
 
 import Foundation
 
-public func <(a: NSDate, b: NSDate) -> Bool {
-    return a.compare(b) == NSComparisonResult.OrderedAscending
+public func <=(lhs: NSDate, rhs: NSDate) -> Bool {
+   return lhs.timeIntervalSince1970 <= rhs.timeIntervalSince1970
 }
 
-public func ==(a: NSDate, b: NSDate) -> Bool {
-    return a.compare(b) == NSComparisonResult.OrderedSame
+public func >=(lhs: NSDate, rhs: NSDate) -> Bool {
+   return lhs.timeIntervalSince1970 >= rhs.timeIntervalSince1970
+}
+
+public func >(lhs: NSDate, rhs: NSDate) -> Bool {
+   return lhs.timeIntervalSince1970 > rhs.timeIntervalSince1970
+}
+
+public func <(lhs: NSDate, rhs: NSDate) -> Bool {
+   return lhs.timeIntervalSince1970 < rhs.timeIntervalSince1970
+}
+
+public func ==(lhs: NSDate, rhs: NSDate) -> Bool {
+   return lhs.timeIntervalSince1970 == rhs.timeIntervalSince1970
 }
 
 extension NSDate : Comparable
@@ -30,4 +42,7 @@ extension NSDate : Comparable
         
         return calendar.dateFromComponents(selfComps)!
     }
+
 }
+
+

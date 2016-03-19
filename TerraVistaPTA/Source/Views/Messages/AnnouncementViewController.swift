@@ -40,22 +40,13 @@ class AnnouncementViewController: UIViewController
         self.editButton.hidden = !LoginController.sharedInstance.getLoggedIn()
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         
-        self.activityIndicator.startAnimating()
         self.table.hidden = true;
-        AnnouncementController.sharedInstance.fetch { (hasError, error) -> Void in
-            if (!hasError)
-            {
-                self.msgArray = AnnouncementController.sharedInstance.getParseObjects() as! [Announcement]
-                self.table.reloadData()
-                self.table.hidden = false;
-            }
-            else
-            {
-                print("Error: \(error!) \(error!.userInfo)")
-                ParseErrorHandler.showError(self, errorCode: error?.code)
-            }
-            self.activityIndicator.stopAnimating()
-        }
+        self.msgArray = AnnouncementController.sharedInstance.getCKObjects() as! [Announcement]
+        self.table.reloadData()
+        self.table.hidden = false;
+        
+        AnnouncementController.sharedInstance.storeLatestDate (NSDate(), usingKey: "PTAMsgDate")
+        
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -70,7 +61,7 @@ class AnnouncementViewController: UIViewController
     private func getCellContentHeight (label: String) -> CGFloat
     {
         //let constraint:CGSize = CGSizeMake(self.view.frame.size.width - 32, 100000.0);
-    
+        
         //var context:NSStringDrawingContext = NSStringDrawingContext();
         let height:CGFloat = label.heightWithConstrainedWidth (self.view.frame.size.width - 32, font: UIFont.systemFontOfSize(14))
         
@@ -87,16 +78,17 @@ class AnnouncementViewController: UIViewController
         alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: { action in
             self.activityIndicator.startAnimating()
             AnnouncementController.sharedInstance.delete (msg, completion: { (hasError, error) -> Void in
-                
-                self.activityIndicator.stopAnimating()
-                if (!hasError)
-                {
-                    self.msgArray = AnnouncementController.sharedInstance.getParseObjects() as! [Announcement]
-                    self.table.reloadData()
-                }
-                else
-                {
-                    ParseErrorHandler.showError(self, errorCode: error?.code)
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.activityIndicator.stopAnimating()
+                    if (!hasError)
+                    {
+                        self.msgArray = AnnouncementController.sharedInstance.getCKObjects() as! [Announcement]
+                        self.table.reloadData()
+                    }
+                    else
+                    {
+                        ParseErrorHandler.showError(self, errorCode: error?.code)
+                    }
                 }
             })
         }))
@@ -172,7 +164,7 @@ extension AnnouncementViewController : UITableViewDataSource
             return cell
         }
     }
-
+    
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == UITableViewCellEditingStyle.Delete {
             let msg: Announcement = msgArray[indexPath.row]

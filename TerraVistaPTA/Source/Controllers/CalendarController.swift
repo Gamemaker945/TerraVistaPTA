@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Parse
+import CloudKit
 
 public class CalendarController : BaseController
 {
@@ -36,31 +36,36 @@ public class CalendarController : BaseController
     //------------------------------------------------------------------------------
     override func fetch (completion: (hasError: Bool, error: NSError?) -> Void)
     {
-        let query:PFQuery = PFQuery(className:"PCalEntry")
-        query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
-            if error == nil {
-                
-                self.parseArray.removeAll()
-                
-                // The find succeeded.
-                print("Successfully retrieved \(objects!.count) calendar entries.")
-                
-                // Do something with the found objects
-                for object in objects! {
-                    let link:CalendarEntry = CalendarEntry()
-                    link.initWithParse(object)
-                    self.parseArray.append(link)
+        let predicate = NSPredicate(value: true)
+        let query = CKQuery(recordType: "PCalEntry", predicate: predicate)
+        
+         dispatch_async(dispatch_get_main_queue()) {
+        
+            self.publicDB?.performQuery (query, inZoneWithID: nil, completionHandler: { (results, error) -> Void in
+                if error == nil {
+                    
+                    self.ckArray.removeAll()
+                    
+                    // The find succeeded.
+                    print("Successfully retrieved \(results!.count) calendar entries.")
+                    
+                    // Do something with the found objects
+                    for object in results! {
+                        let link:CalendarEntry = CalendarEntry()
+                        link.initWithCloudKit(object)
+                        self.ckArray.append(link)
+                    }
+                    
+    //                self.entryArray.sortInPlace({ (link1, link2) -> Bool in
+    //                    return link1.order < link2.order
+    //                })
+                    completion (hasError: false, error: nil)
+                } else {
+                    // Log details of the failure
+                    print("Error: \(error!) \(error!.userInfo)")
+                    completion (hasError: true, error: error)
                 }
-                
-//                self.entryArray.sortInPlace({ (link1, link2) -> Bool in
-//                    return link1.order < link2.order
-//                })
-                completion (hasError: false, error: nil)
-            } else {
-                // Log details of the failure
-                print("Error: \(error!) \(error!.userInfo)")
-                completion (hasError: true, error: error)
-            }
+            })
         }
     }
     
@@ -68,9 +73,9 @@ public class CalendarController : BaseController
     func getEntriesForDate (date: NSDate) -> NSMutableArray
     {
         let result = NSMutableArray()
-        for var i=0; i < parseArray.count; i++
+        for var i=0; i < ckArray.count; i++
         {
-            let entry:CalendarEntry = parseArray[i] as! CalendarEntry
+            let entry:CalendarEntry = ckArray[i] as! CalendarEntry
             if (isSameDays(entry.startDate!, date)) {
                 result.addObject(entry)
             }
@@ -80,9 +85,9 @@ public class CalendarController : BaseController
     
     func hasEntriesForDate (date: NSDate) -> Bool
     {
-        for var i=0; i < parseArray.count; i++
+        for var i=0; i < ckArray.count; i++
         {
-            let entry:CalendarEntry = parseArray[i] as! CalendarEntry
+            let entry:CalendarEntry = ckArray[i] as! CalendarEntry
             if (isSameDays(entry.startDate!, date)) {
                 return true
             }
@@ -90,6 +95,17 @@ public class CalendarController : BaseController
         return false
     }
 
+    func createEntry () -> CalendarEntry {
+        let timestampAsString = String(format: "%f", NSDate.timeIntervalSinceReferenceDate())
+        let timestampParts = timestampAsString.componentsSeparatedByString(".")
+        
+        let entryID = CKRecordID(recordName: timestampParts[0])
+        let entryRecord = CKRecord(recordType: "PCalEntry", recordID: entryID)
+        let entry = CalendarEntry()
+        entry.initWithCloudKit(entryRecord)
+        entry.isNew = true
+        return entry
+    }
     
     
     //------------------------------------------------------------------------------

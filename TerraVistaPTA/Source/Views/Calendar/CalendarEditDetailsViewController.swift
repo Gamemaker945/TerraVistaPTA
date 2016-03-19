@@ -7,11 +7,11 @@
 //
 
 import UIKit
-import Parse
+import CloudKit
 
 class CalendarEditDetailsViewController: UIViewController
 {
-
+    
     //--------------------------------------------------------------------------
     // VARS
     //--------------------------------------------------------------------------
@@ -41,10 +41,10 @@ class CalendarEditDetailsViewController: UIViewController
     //--------------------------------------------------------------------------
     // Mark: Lifecycle Methods
     //--------------------------------------------------------------------------
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         detailsTextView.layer.cornerRadius = 5
         detailsTextView.layer.borderWidth = 1
         detailsTextView.layer.borderColor = UIColor.lightGrayColor().CGColor
@@ -75,7 +75,7 @@ class CalendarEditDetailsViewController: UIViewController
         
         iconBg.userInteractionEnabled = true;
         iconBg.addGestureRecognizer(gesture)
-    
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -96,9 +96,9 @@ class CalendarEditDetailsViewController: UIViewController
         
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardDidShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
-
+        
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
@@ -107,7 +107,7 @@ class CalendarEditDetailsViewController: UIViewController
     //------------------------------------------------------------------------------
     // Mark: UITextFieldDelegate
     //------------------------------------------------------------------------------
-
+    
     
     
     @IBAction func dp(sender: UITextField) {
@@ -148,12 +148,26 @@ class CalendarEditDetailsViewController: UIViewController
             let cal:CalendarEntry? = CalendarController.sharedInstance.getActive () as? CalendarEntry;
             
             CalendarController.sharedInstance.update (cal!, completion: { (hasError, error) -> Void in
-                if (!hasError) {
-                    
-                    self.navigationController?.popViewControllerAnimated(true)
-                    
-                } else {
-                    ParseErrorHandler.showError(self, errorCode: error?.code)
+                
+                dispatch_async(dispatch_get_main_queue()) {
+                    if (!hasError) {
+                        
+                        if (cal!.isNew) {
+                            CalendarController.sharedInstance.insertObject(cal!)
+                        }
+                        if (!hasError)
+                        {
+                            self.navigationController?.popViewControllerAnimated(true)
+                        }
+                        else
+                        {
+                            print("Error: \(error!) \(error!.userInfo)")
+                            ParseErrorHandler.showError(self, errorCode: error?.code)
+                        }
+                        
+                    } else {
+                        ParseErrorHandler.showError(self, errorCode: error?.code)
+                    }
                 }
             })
             
@@ -173,7 +187,7 @@ class CalendarEditDetailsViewController: UIViewController
     //--------------------------------------------------------------------------
     func keyboardDidShow (notification: NSNotification)
     {
-
+        
         if (activeView != nil && activeView == detailsTextView) {
             scrollView.setContentOffset(CGPointMake(0, 160), animated: true)
         }
@@ -184,7 +198,7 @@ class CalendarEditDetailsViewController: UIViewController
         scrollView.setContentOffset(kpos!, animated: true)
     }
     
-
+    
     //--------------------------------------------------------------------------
     // Mark: Private Methods
     //--------------------------------------------------------------------------
@@ -229,7 +243,7 @@ class CalendarEditDetailsViewController: UIViewController
             whenDate = entry!.startDate
             
             iconIndex = entry!.iconIndex
-
+            
         }
         else
         {
@@ -250,10 +264,7 @@ class CalendarEditDetailsViewController: UIViewController
         var cal:CalendarEntry? = CalendarController.sharedInstance.getActive () as? CalendarEntry;
         if (cal == nil)
         {
-            cal = CalendarEntry()
-            cal?.pObj = PFObject(className:"PCalEntry")
-            cal?.pObj!.ACL = PFACL(user: PFUser.currentUser()!)
-            cal?.pObj!.ACL?.setPublicReadAccess(true)
+            cal = CalendarController.sharedInstance.createEntry()
         }
         cal?.title = title
         cal?.location = location
@@ -370,7 +381,7 @@ extension CalendarEditDetailsViewController : UITextViewDelegate
     func textViewDidEndEditing(textView: UITextView) {
         activeView = nil;
     }
-
+    
 }
 
 extension CalendarEditDetailsViewController : UITextFieldDelegate

@@ -91,15 +91,16 @@ class CalendarDetailsViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: { action in
             self.activityIndicator.startAnimating()
             CalendarController.sharedInstance.delete (entry, completion: { (hasError, error) -> Void in
-                
-                self.activityIndicator.stopAnimating()
-                if (!hasError)
-                {
-                    self.navigationController?.popViewControllerAnimated(true);
-                }
-                else
-                {
-                    ParseErrorHandler.showError(self, errorCode: error?.code)
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.activityIndicator.stopAnimating()
+                    if (!hasError)
+                    {
+                        self.navigationController?.popViewControllerAnimated(true);
+                    }
+                    else
+                    {
+                        ParseErrorHandler.showError(self, errorCode: error?.code)
+                    }
                 }
             })
         }))

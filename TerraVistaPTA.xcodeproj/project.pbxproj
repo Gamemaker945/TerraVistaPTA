@@ -7,11 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		32BA08A7A37C1590C522A398 /* Pods_TerraVistaPTA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5884B1F7E0E6EA7E406B66C4 /* Pods_TerraVistaPTA.framework */; };
 		AC268A8B1BF02B6D007E29AE /* ParseErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC268A8A1BF02B6D007E29AE /* ParseErrorHandler.swift */; };
 		AC43991C1BF66E4F00CBEBD3 /* AdminUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC43991B1BF66E4F00CBEBD3 /* AdminUpdateViewController.swift */; };
 		AC43991E1BF6702F00CBEBD3 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC43991D1BF6702F00CBEBD3 /* UITextField.swift */; };
 		AC4399201BF698A500CBEBD3 /* AdminPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC43991F1BF698A500CBEBD3 /* AdminPasswordViewController.swift */; };
+		AC4E63D61C715947006DE2AA /* JTCalendarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AC4E63B61C715947006DE2AA /* JTCalendarManager.m */; };
+		AC4E63D71C715947006DE2AA /* JTCalendarSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = AC4E63B81C715947006DE2AA /* JTCalendarSettings.m */; };
+		AC4E63D81C715947006DE2AA /* JTDateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = AC4E63BA1C715947006DE2AA /* JTDateHelper.m */; };
+		AC4E63D91C715947006DE2AA /* JTCalendarDelegateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AC4E63BD1C715947006DE2AA /* JTCalendarDelegateManager.m */; };
+		AC4E63DA1C715947006DE2AA /* JTCalendarScrollManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AC4E63BF1C715947006DE2AA /* JTCalendarScrollManager.m */; };
+		AC4E63DB1C715947006DE2AA /* JTCalendarDayView.m in Sources */ = {isa = PBXBuildFile; fileRef = AC4E63C91C715947006DE2AA /* JTCalendarDayView.m */; };
+		AC4E63DC1C715947006DE2AA /* JTCalendarMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = AC4E63CB1C715947006DE2AA /* JTCalendarMenuView.m */; };
+		AC4E63DD1C715947006DE2AA /* JTCalendarPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = AC4E63CD1C715947006DE2AA /* JTCalendarPageView.m */; };
+		AC4E63DE1C715947006DE2AA /* JTCalendarWeekDayView.m in Sources */ = {isa = PBXBuildFile; fileRef = AC4E63CF1C715947006DE2AA /* JTCalendarWeekDayView.m */; };
+		AC4E63DF1C715947006DE2AA /* JTCalendarWeekView.m in Sources */ = {isa = PBXBuildFile; fileRef = AC4E63D11C715947006DE2AA /* JTCalendarWeekView.m */; };
+		AC4E63E01C715947006DE2AA /* JTHorizontalCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = AC4E63D31C715947006DE2AA /* JTHorizontalCalendarView.m */; };
+		AC4E63E11C715947006DE2AA /* JTVerticalCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = AC4E63D51C715947006DE2AA /* JTVerticalCalendarView.m */; };
+		AC7C59761C4B556200B4ECA3 /* FetchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7C59751C4B556200B4ECA3 /* FetchController.swift */; };
 		AC9C14441BB1CE7A001D2340 /* CalendarEditDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9C14431BB1CE7A001D2340 /* CalendarEditDetailsViewController.swift */; };
 		ACA36A2D1BB3605C00B32601 /* CalendarEntryTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA36A2C1BB3605C00B32601 /* CalendarEntryTypeTableViewCell.swift */; };
 		ACA36A2F1BB3611700B32601 /* CalendarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA36A2E1BB3611700B32601 /* CalendarIcon.swift */; };
@@ -19,9 +31,6 @@
 		ACA36A351BB3747200B32601 /* PrintController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA36A341BB3747200B32601 /* PrintController.swift */; };
 		ACABF13E1BDFFF9600F651B9 /* AdminLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACABF13D1BDFFF9600F651B9 /* AdminLoginViewController.swift */; };
 		ACABF1401BE0010B00F651B9 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACABF13F1BE0010B00F651B9 /* LoginController.swift */; };
-		ACABF1471BE0319300F651B9 /* Bolts.framework in Resources */ = {isa = PBXBuildFile; fileRef = ACABF1411BE0314700F651B9 /* Bolts.framework */; };
-		ACABF1481BE0319300F651B9 /* Parse.framework in Resources */ = {isa = PBXBuildFile; fileRef = ACABF1421BE0314700F651B9 /* Parse.framework */; };
-		ACABF1491BE0319300F651B9 /* ParseUI.framework in Resources */ = {isa = PBXBuildFile; fileRef = ACABF1431BE0314700F651B9 /* ParseUI.framework */; };
 		ACABF14B1BE031AD00F651B9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACABF14A1BE031AD00F651B9 /* AudioToolbox.framework */; };
 		ACABF1551BE031E800F651B9 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACABF14C1BE031E800F651B9 /* CFNetwork.framework */; };
 		ACABF1561BE031E800F651B9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACABF14D1BE031E800F651B9 /* CoreGraphics.framework */; };
@@ -30,7 +39,6 @@
 		ACABF1591BE031E800F651B9 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = ACABF1501BE031E800F651B9 /* libz.tbd */; };
 		ACABF15A1BE031E800F651B9 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACABF1511BE031E800F651B9 /* QuartzCore.framework */; };
 		ACABF15B1BE031E800F651B9 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACABF1521BE031E800F651B9 /* Security.framework */; };
-		ACABF15C1BE031E800F651B9 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACABF1531BE031E800F651B9 /* StoreKit.framework */; };
 		ACABF15D1BE031E800F651B9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACABF1541BE031E800F651B9 /* SystemConfiguration.framework */; };
 		ACABF1A11BEC041700F651B9 /* NSDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACABF1A01BEC041700F651B9 /* NSDate.swift */; };
 		ACABF1A31BEC09D800F651B9 /* BaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACABF1A21BEC09D800F651B9 /* BaseController.swift */; };
@@ -44,7 +52,7 @@
 		ACB3C28E1BA8971400652B41 /* AnnouncementController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3C2731BA8971400652B41 /* AnnouncementController.swift */; };
 		ACB3C28F1BA8971400652B41 /* WebLinkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3C2741BA8971400652B41 /* WebLinkController.swift */; };
 		ACB3C2901BA8971400652B41 /* Announcement.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3C2771BA8971400652B41 /* Announcement.swift */; };
-		ACB3C2911BA8971400652B41 /* ParseBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3C2781BA8971400652B41 /* ParseBase.swift */; };
+		ACB3C2911BA8971400652B41 /* CKBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3C2781BA8971400652B41 /* CKBase.swift */; };
 		ACB3C2921BA8971400652B41 /* WebLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3C2791BA8971400652B41 /* WebLink.swift */; };
 		ACB3C2931BA8971400652B41 /* AnnouncementTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3C27F1BA8971400652B41 /* AnnouncementTableViewCell.swift */; };
 		ACB3C29C1BA897CE00652B41 /* WebLinkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3C29B1BA897CE00652B41 /* WebLinkTableViewCell.swift */; };
@@ -59,6 +67,8 @@
 		ACB3C34A1BAA130200652B41 /* CalendarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3C3491BAA130200652B41 /* CalendarTableViewCell.swift */; };
 		ACB3C34C1BAA35C100652B41 /* ColorUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3C34B1BAA35C100652B41 /* ColorUtils.swift */; };
 		ACB3C34E1BAA587400652B41 /* CalendarDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3C34D1BAA587400652B41 /* CalendarDetailsViewController.swift */; };
+		ACDD45B71C88CACE007E1297 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACDD45B61C88CACE007E1297 /* CloudKit.framework */; };
+		ACDD45B91C8A23D2007E1297 /* AdminUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDD45B81C8A23D2007E1297 /* AdminUser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,12 +82,47 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		46F4460F3E507A4568442363 /* Pods-TerraVistaPTA.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TerraVistaPTA.release.xcconfig"; path = "Pods/Target Support Files/Pods-TerraVistaPTA/Pods-TerraVistaPTA.release.xcconfig"; sourceTree = "<group>"; };
 		5884B1F7E0E6EA7E406B66C4 /* Pods_TerraVistaPTA.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TerraVistaPTA.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC268A8A1BF02B6D007E29AE /* ParseErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseErrorHandler.swift; sourceTree = "<group>"; };
 		AC43991B1BF66E4F00CBEBD3 /* AdminUpdateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminUpdateViewController.swift; sourceTree = "<group>"; };
 		AC43991D1BF6702F00CBEBD3 /* UITextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		AC43991F1BF698A500CBEBD3 /* AdminPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminPasswordViewController.swift; sourceTree = "<group>"; };
+		AC4E63AC1C71578D006DE2AA /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = "Pods/../build/Debug-iphoneos/Bolts.framework"; sourceTree = "<group>"; };
+		AC4E63AD1C71578D006DE2AA /* JTCalendar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JTCalendar.framework; path = "Pods/../build/Debug-iphoneos/JTCalendar.framework"; sourceTree = "<group>"; };
+		AC4E63AE1C71578D006DE2AA /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = "Pods/../build/Debug-iphoneos/Parse.framework"; sourceTree = "<group>"; };
+		AC4E63B31C715947006DE2AA /* JTCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTCalendar.h; sourceTree = "<group>"; };
+		AC4E63B41C715947006DE2AA /* JTCalendarDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTCalendarDelegate.h; sourceTree = "<group>"; };
+		AC4E63B51C715947006DE2AA /* JTCalendarManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTCalendarManager.h; sourceTree = "<group>"; };
+		AC4E63B61C715947006DE2AA /* JTCalendarManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTCalendarManager.m; sourceTree = "<group>"; };
+		AC4E63B71C715947006DE2AA /* JTCalendarSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTCalendarSettings.h; sourceTree = "<group>"; };
+		AC4E63B81C715947006DE2AA /* JTCalendarSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTCalendarSettings.m; sourceTree = "<group>"; };
+		AC4E63B91C715947006DE2AA /* JTDateHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTDateHelper.h; sourceTree = "<group>"; };
+		AC4E63BA1C715947006DE2AA /* JTDateHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTDateHelper.m; sourceTree = "<group>"; };
+		AC4E63BC1C715947006DE2AA /* JTCalendarDelegateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTCalendarDelegateManager.h; sourceTree = "<group>"; };
+		AC4E63BD1C715947006DE2AA /* JTCalendarDelegateManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTCalendarDelegateManager.m; sourceTree = "<group>"; };
+		AC4E63BE1C715947006DE2AA /* JTCalendarScrollManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTCalendarScrollManager.h; sourceTree = "<group>"; };
+		AC4E63BF1C715947006DE2AA /* JTCalendarScrollManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTCalendarScrollManager.m; sourceTree = "<group>"; };
+		AC4E63C11C715947006DE2AA /* JTCalendarDay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTCalendarDay.h; sourceTree = "<group>"; };
+		AC4E63C21C715947006DE2AA /* JTCalendarPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTCalendarPage.h; sourceTree = "<group>"; };
+		AC4E63C31C715947006DE2AA /* JTCalendarWeek.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTCalendarWeek.h; sourceTree = "<group>"; };
+		AC4E63C41C715947006DE2AA /* JTCalendarWeekDay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTCalendarWeekDay.h; sourceTree = "<group>"; };
+		AC4E63C51C715947006DE2AA /* JTContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTContent.h; sourceTree = "<group>"; };
+		AC4E63C61C715947006DE2AA /* JTMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTMenu.h; sourceTree = "<group>"; };
+		AC4E63C81C715947006DE2AA /* JTCalendarDayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTCalendarDayView.h; sourceTree = "<group>"; };
+		AC4E63C91C715947006DE2AA /* JTCalendarDayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTCalendarDayView.m; sourceTree = "<group>"; };
+		AC4E63CA1C715947006DE2AA /* JTCalendarMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTCalendarMenuView.h; sourceTree = "<group>"; };
+		AC4E63CB1C715947006DE2AA /* JTCalendarMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTCalendarMenuView.m; sourceTree = "<group>"; };
+		AC4E63CC1C715947006DE2AA /* JTCalendarPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTCalendarPageView.h; sourceTree = "<group>"; };
+		AC4E63CD1C715947006DE2AA /* JTCalendarPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTCalendarPageView.m; sourceTree = "<group>"; };
+		AC4E63CE1C715947006DE2AA /* JTCalendarWeekDayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTCalendarWeekDayView.h; sourceTree = "<group>"; };
+		AC4E63CF1C715947006DE2AA /* JTCalendarWeekDayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTCalendarWeekDayView.m; sourceTree = "<group>"; };
+		AC4E63D01C715947006DE2AA /* JTCalendarWeekView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTCalendarWeekView.h; sourceTree = "<group>"; };
+		AC4E63D11C715947006DE2AA /* JTCalendarWeekView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTCalendarWeekView.m; sourceTree = "<group>"; };
+		AC4E63D21C715947006DE2AA /* JTHorizontalCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTHorizontalCalendarView.h; sourceTree = "<group>"; };
+		AC4E63D31C715947006DE2AA /* JTHorizontalCalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTHorizontalCalendarView.m; sourceTree = "<group>"; };
+		AC4E63D41C715947006DE2AA /* JTVerticalCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTVerticalCalendarView.h; sourceTree = "<group>"; };
+		AC4E63D51C715947006DE2AA /* JTVerticalCalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTVerticalCalendarView.m; sourceTree = "<group>"; };
+		AC7C59751C4B556200B4ECA3 /* FetchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchController.swift; sourceTree = "<group>"; };
 		AC9C14431BB1CE7A001D2340 /* CalendarEditDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarEditDetailsViewController.swift; sourceTree = "<group>"; };
 		ACA36A2C1BB3605C00B32601 /* CalendarEntryTypeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarEntryTypeTableViewCell.swift; sourceTree = "<group>"; };
 		ACA36A2E1BB3611700B32601 /* CalendarIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarIcon.swift; sourceTree = "<group>"; };
@@ -85,9 +130,6 @@
 		ACA36A341BB3747200B32601 /* PrintController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrintController.swift; sourceTree = "<group>"; };
 		ACABF13D1BDFFF9600F651B9 /* AdminLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminLoginViewController.swift; sourceTree = "<group>"; };
 		ACABF13F1BE0010B00F651B9 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
-		ACABF1411BE0314700F651B9 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
-		ACABF1421BE0314700F651B9 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
-		ACABF1431BE0314700F651B9 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
 		ACABF14A1BE031AD00F651B9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		ACABF14C1BE031E800F651B9 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		ACABF14D1BE031E800F651B9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -96,7 +138,6 @@
 		ACABF1501BE031E800F651B9 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		ACABF1511BE031E800F651B9 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		ACABF1521BE031E800F651B9 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		ACABF1531BE031E800F651B9 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		ACABF1541BE031E800F651B9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		ACABF1A01BEC041700F651B9 /* NSDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDate.swift; sourceTree = "<group>"; };
 		ACABF1A21BEC09D800F651B9 /* BaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseController.swift; sourceTree = "<group>"; };
@@ -114,7 +155,7 @@
 		ACB3C2731BA8971400652B41 /* AnnouncementController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementController.swift; sourceTree = "<group>"; };
 		ACB3C2741BA8971400652B41 /* WebLinkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebLinkController.swift; sourceTree = "<group>"; };
 		ACB3C2771BA8971400652B41 /* Announcement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Announcement.swift; sourceTree = "<group>"; };
-		ACB3C2781BA8971400652B41 /* ParseBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseBase.swift; sourceTree = "<group>"; };
+		ACB3C2781BA8971400652B41 /* CKBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CKBase.swift; sourceTree = "<group>"; };
 		ACB3C2791BA8971400652B41 /* WebLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebLink.swift; sourceTree = "<group>"; };
 		ACB3C27F1BA8971400652B41 /* AnnouncementTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementTableViewCell.swift; sourceTree = "<group>"; };
 		ACB3C29B1BA897CE00652B41 /* WebLinkTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebLinkTableViewCell.swift; sourceTree = "<group>"; };
@@ -130,7 +171,9 @@
 		ACB3C3491BAA130200652B41 /* CalendarTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarTableViewCell.swift; sourceTree = "<group>"; };
 		ACB3C34B1BAA35C100652B41 /* ColorUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorUtils.swift; sourceTree = "<group>"; };
 		ACB3C34D1BAA587400652B41 /* CalendarDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarDetailsViewController.swift; sourceTree = "<group>"; };
-		F307D195814E7EAE7A26FCA0 /* Pods-TerraVistaPTA.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TerraVistaPTA.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TerraVistaPTA/Pods-TerraVistaPTA.debug.xcconfig"; sourceTree = "<group>"; };
+		ACDD45B51C88C107007E1297 /* TerraVistaPTA.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TerraVistaPTA.entitlements; sourceTree = "<group>"; };
+		ACDD45B61C88CACE007E1297 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		ACDD45B81C8A23D2007E1297 /* AdminUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminUser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,10 +188,9 @@
 				ACABF1591BE031E800F651B9 /* libz.tbd in Frameworks */,
 				ACABF15A1BE031E800F651B9 /* QuartzCore.framework in Frameworks */,
 				ACABF15B1BE031E800F651B9 /* Security.framework in Frameworks */,
-				ACABF15C1BE031E800F651B9 /* StoreKit.framework in Frameworks */,
+				ACDD45B71C88CACE007E1297 /* CloudKit.framework in Frameworks */,
 				ACABF15D1BE031E800F651B9 /* SystemConfiguration.framework in Frameworks */,
 				ACABF14B1BE031AD00F651B9 /* AudioToolbox.framework in Frameworks */,
-				32BA08A7A37C1590C522A398 /* Pods_TerraVistaPTA.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -162,21 +204,79 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4017C549B567DBAEEC44CC1F /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				F307D195814E7EAE7A26FCA0 /* Pods-TerraVistaPTA.debug.xcconfig */,
-				46F4460F3E507A4568442363 /* Pods-TerraVistaPTA.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		4BF5ECB9C044535E8C99D389 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				ACDD45B61C88CACE007E1297 /* CloudKit.framework */,
+				AC4E63AC1C71578D006DE2AA /* Bolts.framework */,
+				AC4E63AD1C71578D006DE2AA /* JTCalendar.framework */,
+				AC4E63AE1C71578D006DE2AA /* Parse.framework */,
 				5884B1F7E0E6EA7E406B66C4 /* Pods_TerraVistaPTA.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AC4E63B21C715947006DE2AA /* JCalendar */ = {
+			isa = PBXGroup;
+			children = (
+				AC4E63B31C715947006DE2AA /* JTCalendar.h */,
+				AC4E63B41C715947006DE2AA /* JTCalendarDelegate.h */,
+				AC4E63B51C715947006DE2AA /* JTCalendarManager.h */,
+				AC4E63B61C715947006DE2AA /* JTCalendarManager.m */,
+				AC4E63B71C715947006DE2AA /* JTCalendarSettings.h */,
+				AC4E63B81C715947006DE2AA /* JTCalendarSettings.m */,
+				AC4E63B91C715947006DE2AA /* JTDateHelper.h */,
+				AC4E63BA1C715947006DE2AA /* JTDateHelper.m */,
+				AC4E63BB1C715947006DE2AA /* Managers */,
+				AC4E63C01C715947006DE2AA /* Protocols */,
+				AC4E63C71C715947006DE2AA /* Views */,
+			);
+			path = JCalendar;
+			sourceTree = "<group>";
+		};
+		AC4E63BB1C715947006DE2AA /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				AC4E63BC1C715947006DE2AA /* JTCalendarDelegateManager.h */,
+				AC4E63BD1C715947006DE2AA /* JTCalendarDelegateManager.m */,
+				AC4E63BE1C715947006DE2AA /* JTCalendarScrollManager.h */,
+				AC4E63BF1C715947006DE2AA /* JTCalendarScrollManager.m */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		AC4E63C01C715947006DE2AA /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				AC4E63C11C715947006DE2AA /* JTCalendarDay.h */,
+				AC4E63C21C715947006DE2AA /* JTCalendarPage.h */,
+				AC4E63C31C715947006DE2AA /* JTCalendarWeek.h */,
+				AC4E63C41C715947006DE2AA /* JTCalendarWeekDay.h */,
+				AC4E63C51C715947006DE2AA /* JTContent.h */,
+				AC4E63C61C715947006DE2AA /* JTMenu.h */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		AC4E63C71C715947006DE2AA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				AC4E63C81C715947006DE2AA /* JTCalendarDayView.h */,
+				AC4E63C91C715947006DE2AA /* JTCalendarDayView.m */,
+				AC4E63CA1C715947006DE2AA /* JTCalendarMenuView.h */,
+				AC4E63CB1C715947006DE2AA /* JTCalendarMenuView.m */,
+				AC4E63CC1C715947006DE2AA /* JTCalendarPageView.h */,
+				AC4E63CD1C715947006DE2AA /* JTCalendarPageView.m */,
+				AC4E63CE1C715947006DE2AA /* JTCalendarWeekDayView.h */,
+				AC4E63CF1C715947006DE2AA /* JTCalendarWeekDayView.m */,
+				AC4E63D01C715947006DE2AA /* JTCalendarWeekView.h */,
+				AC4E63D11C715947006DE2AA /* JTCalendarWeekView.m */,
+				AC4E63D21C715947006DE2AA /* JTHorizontalCalendarView.h */,
+				AC4E63D31C715947006DE2AA /* JTHorizontalCalendarView.m */,
+				AC4E63D41C715947006DE2AA /* JTVerticalCalendarView.h */,
+				AC4E63D51C715947006DE2AA /* JTVerticalCalendarView.m */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		ACA36A321BB3745100B32601 /* Animation */ = {
@@ -215,13 +315,11 @@
 				ACABF1501BE031E800F651B9 /* libz.tbd */,
 				ACABF1511BE031E800F651B9 /* QuartzCore.framework */,
 				ACABF1521BE031E800F651B9 /* Security.framework */,
-				ACABF1531BE031E800F651B9 /* StoreKit.framework */,
 				ACABF1541BE031E800F651B9 /* SystemConfiguration.framework */,
 				ACABF14A1BE031AD00F651B9 /* AudioToolbox.framework */,
 				ACB3C24C1BA8967500652B41 /* TerraVistaPTA */,
 				ACB3C2621BA8967500652B41 /* TerraVistaPTATests */,
 				ACB3C24B1BA8967500652B41 /* Products */,
-				4017C549B567DBAEEC44CC1F /* Pods */,
 				4BF5ECB9C044535E8C99D389 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -238,6 +336,7 @@
 		ACB3C24C1BA8967500652B41 /* TerraVistaPTA */ = {
 			isa = PBXGroup;
 			children = (
+				ACDD45B51C88C107007E1297 /* TerraVistaPTA.entitlements */,
 				ACB3C26F1BA8971400652B41 /* Source */,
 				ACB3C24F1BA8967500652B41 /* AppDelegate.swift */,
 				ACB3C2531BA8967500652B41 /* Main.storyboard */,
@@ -251,9 +350,6 @@
 		ACB3C24D1BA8967500652B41 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				ACABF1411BE0314700F651B9 /* Bolts.framework */,
-				ACABF1421BE0314700F651B9 /* Parse.framework */,
-				ACABF1431BE0314700F651B9 /* ParseUI.framework */,
 				ACB3C24E1BA8967500652B41 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -279,6 +375,7 @@
 		ACB3C26F1BA8971400652B41 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				ACDD45BA1C8A56B7007E1297 /* Operations */,
 				ACA36A321BB3745100B32601 /* Animation */,
 				ACB3C2711BA8971400652B41 /* CommonDefines.swift */,
 				ACB3C2721BA8971400652B41 /* Controllers */,
@@ -298,6 +395,7 @@
 				ACB3C3411BAA0E2100652B41 /* CalendarController.swift */,
 				ACABF13F1BE0010B00F651B9 /* LoginController.swift */,
 				ACABF1A21BEC09D800F651B9 /* BaseController.swift */,
+				AC7C59751C4B556200B4ECA3 /* FetchController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -305,6 +403,7 @@
 		ACB3C2751BA8971400652B41 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				AC4E63B21C715947006DE2AA /* JCalendar */,
 				ACB3C33D1BA9EB1500652B41 /* TerraVistaPTA-Bridging-Header.h */,
 			);
 			path = Libraries;
@@ -314,10 +413,11 @@
 			isa = PBXGroup;
 			children = (
 				ACB3C2771BA8971400652B41 /* Announcement.swift */,
-				ACB3C2781BA8971400652B41 /* ParseBase.swift */,
+				ACB3C2781BA8971400652B41 /* CKBase.swift */,
 				ACB3C2791BA8971400652B41 /* WebLink.swift */,
 				ACB3C3431BAA0E5C00652B41 /* CalendarEntry.swift */,
 				ACA36A2E1BB3611700B32601 /* CalendarIcon.swift */,
+				ACDD45B81C8A23D2007E1297 /* AdminUser.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -411,6 +511,13 @@
 			name = TableViewCells;
 			sourceTree = "<group>";
 		};
+		ACDD45BA1C8A56B7007E1297 /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Operations;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -418,12 +525,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = ACB3C2691BA8967500652B41 /* Build configuration list for PBXNativeTarget "TerraVistaPTA" */;
 			buildPhases = (
-				F1CEAA5100AC5C8CCDFD0F55 /* Check Pods Manifest.lock */,
 				ACB3C2461BA8967500652B41 /* Sources */,
 				ACB3C2471BA8967500652B41 /* Frameworks */,
 				ACB3C2481BA8967500652B41 /* Resources */,
-				A93FD2BC89B7E698B870F537 /* Embed Pods Frameworks */,
-				F9FB3D677D027DE14B0215CE /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -460,11 +564,20 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0640;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Brain Glove Apps";
 				TargetAttributes = {
 					ACB3C2491BA8967500652B41 = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = L4647Z9YVM;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 0;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 					ACB3C25E1BA8967500652B41 = {
 						CreatedOnToolsVersion = 6.4;
@@ -496,9 +609,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ACABF1471BE0319300F651B9 /* Bolts.framework in Resources */,
-				ACABF1481BE0319300F651B9 /* Parse.framework in Resources */,
-				ACABF1491BE0319300F651B9 /* ParseUI.framework in Resources */,
 				ACB3C2551BA8967500652B41 /* Main.storyboard in Resources */,
 				ACB3C25A1BA8967500652B41 /* LaunchScreen.xib in Resources */,
 				ACB3C2571BA8967500652B41 /* Images.xcassets in Resources */,
@@ -514,54 +624,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		A93FD2BC89B7E698B870F537 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TerraVistaPTA/Pods-TerraVistaPTA-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F1CEAA5100AC5C8CCDFD0F55 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		F9FB3D677D027DE14B0215CE /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TerraVistaPTA/Pods-TerraVistaPTA-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		ACB3C2461BA8967500652B41 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -569,38 +631,52 @@
 			files = (
 				ACA36A2F1BB3611700B32601 /* CalendarIcon.swift in Sources */,
 				ACB3C2901BA8971400652B41 /* Announcement.swift in Sources */,
+				ACDD45B91C8A23D2007E1297 /* AdminUser.swift in Sources */,
 				ACB3C2931BA8971400652B41 /* AnnouncementTableViewCell.swift in Sources */,
+				AC4E63DE1C715947006DE2AA /* JTCalendarWeekDayView.m in Sources */,
 				ACB3C29C1BA897CE00652B41 /* WebLinkTableViewCell.swift in Sources */,
-				ACB3C2911BA8971400652B41 /* ParseBase.swift in Sources */,
+				AC4E63DD1C715947006DE2AA /* JTCalendarPageView.m in Sources */,
+				ACB3C2911BA8971400652B41 /* CKBase.swift in Sources */,
+				AC4E63E11C715947006DE2AA /* JTVerticalCalendarView.m in Sources */,
 				AC43991C1BF66E4F00CBEBD3 /* AdminUpdateViewController.swift in Sources */,
+				AC4E63DA1C715947006DE2AA /* JTCalendarScrollManager.m in Sources */,
+				AC4E63DC1C715947006DE2AA /* JTCalendarMenuView.m in Sources */,
+				AC4E63DF1C715947006DE2AA /* JTCalendarWeekView.m in Sources */,
 				ACB3C28D1BA8971400652B41 /* CommonDefines.swift in Sources */,
 				ACB3C3441BAA0E5C00652B41 /* CalendarEntry.swift in Sources */,
 				ACB3C34A1BAA130200652B41 /* CalendarTableViewCell.swift in Sources */,
+				AC4E63D61C715947006DE2AA /* JTCalendarManager.m in Sources */,
 				ACB3C34E1BAA587400652B41 /* CalendarDetailsViewController.swift in Sources */,
 				ACB3C2521BA8967500652B41 /* ViewController.swift in Sources */,
 				ACB3C2921BA8971400652B41 /* WebLink.swift in Sources */,
+				AC4E63D81C715947006DE2AA /* JTDateHelper.m in Sources */,
 				ACABF1A31BEC09D800F651B9 /* BaseController.swift in Sources */,
 				AC4399201BF698A500CBEBD3 /* AdminPasswordViewController.swift in Sources */,
 				AC9C14441BB1CE7A001D2340 /* CalendarEditDetailsViewController.swift in Sources */,
 				AC43991E1BF6702F00CBEBD3 /* UITextField.swift in Sources */,
+				AC4E63D91C715947006DE2AA /* JTCalendarDelegateManager.m in Sources */,
 				ACA36A351BB3747200B32601 /* PrintController.swift in Sources */,
 				ACB3C28E1BA8971400652B41 /* AnnouncementController.swift in Sources */,
 				ACB3C2A71BA8A8A500652B41 /* AnnouncementAddViewController.swift in Sources */,
 				ACABF13E1BDFFF9600F651B9 /* AdminLoginViewController.swift in Sources */,
 				ACB3C2A31BA8A49100652B41 /* AnnouncementViewController.swift in Sources */,
+				AC7C59761C4B556200B4ECA3 /* FetchController.swift in Sources */,
 				ACA36A2D1BB3605C00B32601 /* CalendarEntryTypeTableViewCell.swift in Sources */,
 				ACABF1A11BEC041700F651B9 /* NSDate.swift in Sources */,
 				ACB3C2501BA8967500652B41 /* AppDelegate.swift in Sources */,
 				ACABF1401BE0010B00F651B9 /* LoginController.swift in Sources */,
 				ACB3C2A01BA89FB400652B41 /* WebLinkAddViewController.swift in Sources */,
 				ACA36A311BB361CC00B32601 /* CalendarEntryTypeViewController.swift in Sources */,
+				AC4E63E01C715947006DE2AA /* JTHorizontalCalendarView.m in Sources */,
 				ACB3C30B1BA9E7F700652B41 /* CalendarView.swift in Sources */,
+				AC4E63D71C715947006DE2AA /* JTCalendarSettings.m in Sources */,
 				ACB3C28F1BA8971400652B41 /* WebLinkController.swift in Sources */,
 				AC268A8B1BF02B6D007E29AE /* ParseErrorHandler.swift in Sources */,
 				ACB3C34C1BAA35C100652B41 /* ColorUtils.swift in Sources */,
 				ACB3C2A51BA8A74500652B41 /* String.swift in Sources */,
 				ACB3C29E1BA89BCC00652B41 /* WebViewController.swift in Sources */,
 				ACB3C3421BAA0E2100652B41 /* CalendarController.swift in Sources */,
+				AC4E63DB1C715947006DE2AA /* JTCalendarDayView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -663,6 +739,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -727,17 +804,23 @@
 		};
 		ACB3C26A1BA8967500652B41 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F307D195814E7EAE7A26FCA0 /* Pods-TerraVistaPTA.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = TerraVistaPTA/TerraVistaPTA.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/TerraVistaPTA",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = TerraVistaPTA/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.brainglove.terravistapta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "TerraVistaPTA/Source/Libraries/TerraVistaPTA-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -745,17 +828,23 @@
 		};
 		ACB3C26B1BA8967500652B41 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 46F4460F3E507A4568442363 /* Pods-TerraVistaPTA.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = TerraVistaPTA/TerraVistaPTA.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/TerraVistaPTA",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = TerraVistaPTA/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.brainglove.terravistapta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "TerraVistaPTA/Source/Libraries/TerraVistaPTA-Bridging-Header.h";
 			};
 			name = Release;
@@ -774,6 +863,7 @@
 				);
 				INFOPLIST_FILE = TerraVistaPTATests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.braingloveapps.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TerraVistaPTA.app/TerraVistaPTA";
 			};
@@ -789,6 +879,7 @@
 				);
 				INFOPLIST_FILE = TerraVistaPTATests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.braingloveapps.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TerraVistaPTA.app/TerraVistaPTA";
 			};

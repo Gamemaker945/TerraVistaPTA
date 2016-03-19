@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Parse
+import CloudKit
 
 public class AnnouncementController : BaseController
 {
@@ -33,37 +33,52 @@ public class AnnouncementController : BaseController
     //------------------------------------------------------------------------------
     override func fetch (completion: (hasError: Bool, error: NSError?) -> Void)
     {
-        let query:PFQuery = PFQuery(className:"PAnnouncement")
-        query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
-            if error == nil {
-                
-                self.parseArray.removeAll()
-                
-                // The find succeeded.
-                print("Successfully retrieved \(objects!.count) announcements.")
-                
-                // Do something with the found objects
-                for object in objects! {
-                    let msg:Announcement = Announcement()
-                    msg.initWithParse(object)
-                    self.parseArray.append(msg)
+        let predicate = NSPredicate(value: true)
+        let query = CKQuery(recordType: "PAnnouncement", predicate: predicate)
+        
+        dispatch_async(dispatch_get_main_queue()) {
+
+            self.publicDB?.performQuery (query, inZoneWithID: nil, completionHandler: { (results, error) -> Void in
+                if error == nil {
+                    
+                    self.ckArray.removeAll()
+                    
+                    // The find succeeded.
+                    print("Successfully retrieved \(results!.count) announcements.")
+                    
+                    // Do something with the found objects
+                    for object in results! {
+                        let msg:Announcement = Announcement()
+                        msg.initWithCloudKit(object)
+                        self.ckArray.append(msg)
+                    }
+                    
+                   self.sortCKObjects()
+                    completion (hasError: false, error: nil)
+                } else {
+                    // Log details of the failure
+                    print("Error: \(error!) \(error!.userInfo)")
+                    completion (hasError: true, error: error)
                 }
-                
-               self.sortParseObjects()
-                completion (hasError: false, error: nil)
-            } else {
-                // Log details of the failure
-                print("Error: \(error!) \(error!.userInfo)")
-                completion (hasError: true, error: error)
-            }
+            })
         }
     }
     
-
+    func createEntry () -> Announcement {
+        let timestampAsString = String(format: "%f", NSDate.timeIntervalSinceReferenceDate())
+        let timestampParts = timestampAsString.componentsSeparatedByString(".")
+        
+        let entryID = CKRecordID(recordName: timestampParts[0])
+        let entryRecord = CKRecord(recordType: "PAnnouncement", recordID: entryID)
+        let entry = Announcement()
+        entry.initWithCloudKit(entryRecord)
+        entry.isNew = true
+        return entry
+    }
     
-    override func sortParseObjects ()
+    override func sortCKObjects ()
     {
-        self.parseArray.sortInPlace({ (pb1, pb2) -> Bool in
+        self.ckArray.sortInPlace({ (pb1, pb2) -> Bool in
             let link1 = pb1 as! Announcement
             let link2 = pb2 as! Announcement
 

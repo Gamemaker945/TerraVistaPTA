@@ -7,34 +7,34 @@
 //
 
 import Foundation
-import Parse
+import CloudKit
 
-public class Announcement : ParseBase
+public class Announcement : CKBase
 {
     public var title: String
         {
         get {
-            return pObj!["title"] as! String
+            return rObj!["title"] as! String
         }
         set (newtitle) {
-            pObj!["title"] = newtitle
+            rObj!["title"] = newtitle
         }
     }
     
     public var content: String
         {
         get {
-            return pObj!["content"] as! String
+            return rObj!["content"] as! String
         }
         set (newcontent) {
-            pObj!["content"] = newcontent
+            rObj!["content"] = newcontent
         }
     }
     
     public var date: NSDate
         {
         get {
-            return pObj!.updatedAt!
+            return rObj!.modificationDate!
         }
         set (newDate) {
             
@@ -47,9 +47,9 @@ public class Announcement : ParseBase
         super.init()
     }
     
-    override func initWithParse (parseObj: PFObject)
+    override func initWithCloudKit (rObj: CKRecord)
     {
-        super.initWithParse(parseObj)
+        super.initWithCloudKit(rObj)
     }
     
 }

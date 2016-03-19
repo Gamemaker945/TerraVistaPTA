@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Parse
 
 class AdminLoginViewController: UIViewController {
     
@@ -36,8 +35,8 @@ class AdminLoginViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.usernameTextField.text = "test";
-        self.passwordTextField.text = "test12345";
+        //self.usernameTextField.text = " ";
+        //self.passwordTextField.text = "test12345";
         
         self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
@@ -60,24 +59,30 @@ class AdminLoginViewController: UIViewController {
     @IBAction func loginPressed(sender: UIButton)
     {
         self.activityIndicator.startAnimating()
-        PFUser.logInWithUsernameInBackground(self.usernameTextField.text!, password: self.passwordTextField.text!) { (user: PFUser?, error: NSError?) -> Void in
-            if error == nil {
+        LoginController.sharedInstance.login(self.usernameTextField.text!, password: self.passwordTextField.text!) { (loggedIn, error) -> Void in
+            if error == nil && loggedIn == true{
                 
-                LoginController.sharedInstance.setActiveUser(user)
-                LoginController.sharedInstance.setLoggedIn(true)
-                self.navigationController?.popToRootViewControllerAnimated(true);
+                dispatch_async(dispatch_get_main_queue()) {
+
+                    self.activityIndicator.stopAnimating()
+                    self.navigationController?.popToRootViewControllerAnimated(true);
+                }
                 
                 print("User Logged In")
-
+                
             } else {
                 // Log details of the failure
-                print("Error: \(error!) \(error!.userInfo)")
-                LoginController.sharedInstance.setActiveUser(nil)
-                LoginController.sharedInstance.setLoggedIn(false)
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.activityIndicator.stopAnimating()
+                    
+                    let alert = UIAlertController(title: "Error", message: "Either the username or password was incorrect. Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    LoginController.sharedInstance.setActiveUser(nil)
+                    LoginController.sharedInstance.setLoggedIn(false)
+                }
             }
-            self.activityIndicator.stopAnimating()
         }
-        
     }
 
     @IBAction func forgotPasswordPressed(sender: UIButton)
